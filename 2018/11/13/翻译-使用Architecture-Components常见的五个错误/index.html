@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>[翻译]使用Architecture Components常见的五个错误 | 坚持远方</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="时人莫小池中水，浅处无妨有卧龙。">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="[翻译]使用Architecture Components常见的五个错误 | 坚持远方">
+    <meta name="twitter:description" content="时人莫小池中水，浅处无妨有卧龙。">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[翻译]使用Architecture Components常见的五个错误 | 坚持远方">
+    <meta property="og:description" content="时人莫小池中水，浅处无妨有卧龙。">
+
+    
+    <meta name="author" content="赵珊珊">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    
+    
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="坚持远方" href="/atom.xml">
+    
+
+    <link rel="canonical" href="https://zhanfangzxc.github.io/2018/11/13/翻译-使用Architecture-Components常见的五个错误/"/>
+
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 坚持远方 的主页"><img src="/images/logo.png" width="80" alt="坚持远方 logo" class="panel-cover__logo logo"></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 坚持远方">坚持远方</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">个人成长记录</span>
+        
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">时人莫小池中水，浅处无妨有卧龙。</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">文章</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/zhanfangzxc" title="我的微博" target="_blank">
+      <i class="social fa fa-weibo"></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/zhanfangzxc" title="查看我的GitHub主页" target="_blank">
+      <i class="social fa fa-github"></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+        <li class="navigation__item">
+            <a href="https://stackoverflow.com/users/4136144/%E5%9D%9A%E6%8C%81%E8%BF%9C%E6%96%B9" title="Stack Overflow" target="_blank">
+                <i class="social fa fa-stack-overflow"></i>
+                <span class="label">Stack Overflow</span>
+            </a>
+        </li>
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+
+<!-- Twitter -->
+
+<!-- instagram -->
+
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class="social fa fa-rss"></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-11-13T09:33:45.000Z" class="post-list__meta--date date">2018-11-13</time>
+ &#8226; <span class="post-meta__tags tags">分类&nbsp;
+  <a class="tag-link" href="/tags/翻译-android/">翻译 android</a>
+
+</span>
+    </div>
+    <h1 class="post-title">[翻译]使用Architecture Components常见的五个错误</h1>
+  </header>
+
+  <section class="post">
+    <p>原文地址:<a href="https://proandroiddev.com/5-common-mistakes-when-using-architecture-components-403e9899f4cb" target="_blank" rel="noopener">5 common mistakes when using Architecture Components</a></p>
+<p>文章包含以下内容:</p>
+<ul>
+<li>Fragments 中 LiveData Observers 泄漏</li>
+<li>每次屏幕旋转都会重新加载数据</li>
+<li>ViewModels 泄漏</li>
+<li>将 LiveData 公开为可视的视图</li>
+<li>每次配置更改之后创建 ViewModels 依赖</li>
+</ul>
+<h3 id="Fragments-中-LiveData-Observers-泄漏"><a href="#Fragments-中-LiveData-Observers-泄漏" class="headerlink" title="Fragments 中 LiveData Observers 泄漏"></a>Fragments 中 LiveData Observers 泄漏</h3><p>Fragments 的生命周期是比较棘手的，一个 fragment 从 detached 到 attached 的过程中并不总会调用 onDestroy 方法,例如，当配置更改时,fragments 就不会被销毁，当配置更改时，只有 fragments 中的 views 会被销毁，而 fragment 会继续存活,所以 DESTROYED 状态就走不到。</p>
+<p>这意味着，我们在 onCreateView 或 onActivityCreated 中开始观察 LiveData 时，就会将 fragment 作为 LifecycleOwner:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class BooksFragment: Fragment() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> lateinit <span class="keyword">var</span> viewModel: BooksViewModel</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onCreateView</span><span class="params">(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)</span>: View? </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> inflater.inflate(R.layout.fragment_books, container)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onActivityCreated</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onActivityCreated(savedInstanceState)</span><br><span class="line">        viewModel = ViewModelProviders.of(<span class="keyword">this</span>).get(BooksViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">        <span class="title">viewModel</span>.<span class="title">liveData</span>.<span class="title">observe</span>(<span class="title">this</span>, <span class="title">Observer</span> </span>&#123; updateViews(it) &#125;)  <span class="comment">// Risky: Passing Fragment as LifecycleOwner</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每次 fragment 重新 attached 时会创建一个新的 Observer 实例，但是之前的 Observer 并没有移除，因为 LifecycleOwner 没有走到<strong>DESTROYED</strong>状态，这会导致越来越多的相同观察者同时处于活动状态，并且 onChanged 中的代码被多次执行。</p>
+<p>这个问题可以在<a href="https://medium.com/@BladeCoder/architecture-components-pitfalls-part-1-9300dd969808" target="_blank" rel="noopener">这里</a>找到更多的解释</p>
+<p>最终解决方案就是使用 fragments 中 view 的生命周期开来代替 fragments 的生命周期，<strong>getViewLifeCycleOwner()</strong>和<strong>getViewLifeCycleOwnerLiveData()</strong>在 support library 28.0.0 和 AndroidX 1.0.0 中被提供,这样每次 fragment 中 views 被销毁的时候，LiveData 都会移除掉 observers。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class BooksFragment : Fragment() &#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onActivityCreated</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onActivityCreated(savedInstanceState)</span><br><span class="line">        viewModel = ViewModelProviders.of(<span class="keyword">this</span>).get(BooksViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">        <span class="title">viewModel</span>.<span class="title">liveData</span>.<span class="title">observe</span>(<span class="title">viewLifecycleOwner</span>, <span class="title">Observer</span> </span>&#123; updateViews(it) &#125;)    <span class="comment">// Usually what we want: Passing Fragment's view as LifecycleOwner</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="每次屏幕旋转都重新加载数据"><a href="#每次屏幕旋转都重新加载数据" class="headerlink" title="每次屏幕旋转都重新加载数据"></a>每次屏幕旋转都重新加载数据</h3><p>通常情况下初始化和设置逻辑我们都会放在 Activity 中的 onCreate()方法中，通常我们也会在 onCreate 中触发加载数据的逻辑，但是会产生的问题就是当屏幕旋转的时候会重新加载数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductViewModel</span>(</span></span><br><span class="line">    private val repository: ProductRepository</span><br><span class="line">) : ViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> val productDetails = MutableLiveData&lt;Resource&lt;ProductDetails&gt;&gt;()</span><br><span class="line">    <span class="keyword">private</span> val specialOffers = MutableLiveData&lt;Resource&lt;SpecialOffers&gt;&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">getProductsDetails</span><span class="params">()</span>: LiveData&lt;Resource&lt;ProductDetails&gt;&gt; </span>&#123;</span><br><span class="line">        repository.getProductDetails()  <span class="comment">// Loading ProductDetails from network/database</span></span><br><span class="line">        ...                             <span class="comment">// Getting ProductDetails from repository and updating productDetails LiveData</span></span><br><span class="line">        <span class="keyword">return</span> productDetails</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">loadSpecialOffers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        repository.getSpecialOffers()   <span class="comment">// Loading SpecialOffers from network/database</span></span><br><span class="line">        ...                             <span class="comment">// Getting SpecialOffers from repository and updating specialOffers LiveData</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ProductActivity : AppCompatActivity() &#123;</span><br><span class="line"></span><br><span class="line">    lateinit <span class="keyword">var</span> productViewModelFactory: ProductViewModelFactory</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onCreate</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        val viewModel = ViewModelProviders.of(<span class="keyword">this</span>, productViewModelFactory).get(ProductViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">        <span class="title">viewModel</span>.<span class="title">getProductsDetails</span>().<span class="title">observe</span>(<span class="title">this</span>, <span class="title">Observer</span> </span>&#123; <span class="comment">/*...*/</span> &#125;)  <span class="comment">// (probable) Reloading product details after every rotation</span></span><br><span class="line">        viewModel.loadSpecialOffers()                                       <span class="comment">// (probable) Reloading special offers after every rotation</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解决方案：</p>
+<ol>
+<li>使用 AbsentLiveData，只有在数据没有被设置的时候才去加载</li>
+<li>在真正需要的时候才开始加载数据，比如在 OnClickListener 中</li>
+<li>在 ViewModels 的构造函数中加载并暴露 getters。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductViewModel</span>(</span></span><br><span class="line">    private val repository: ProductRepository</span><br><span class="line">) : ViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> val productDetails = MutableLiveData&lt;Resource&lt;ProductDetails&gt;&gt;()</span><br><span class="line">    <span class="keyword">private</span> val specialOffers = MutableLiveData&lt;Resource&lt;SpecialOffers&gt;&gt;()</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        loadProductsDetails()           <span class="comment">// ViewModel is created only once during Activity/Fragment lifetime</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> fun <span class="title">loadProductsDetails</span><span class="params">()</span> </span>&#123; <span class="comment">// private, just utility method to be invoked in constructor</span></span><br><span class="line">        repository.getProductDetails()  <span class="comment">// Loading ProductDetails from network/database</span></span><br><span class="line">        ...                             <span class="comment">// Getting ProductDetails from repository and updating productDetails LiveData</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">loadSpecialOffers</span><span class="params">()</span> </span>&#123;           <span class="comment">// public, intended to be invoked by other classes when needed</span></span><br><span class="line">        repository.getSpecialOffers()   <span class="comment">// Loading SpecialOffers from network/database</span></span><br><span class="line">        ...                             <span class="comment">// Getting SpecialOffers from repository and updating _specialOffers LiveData</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">getProductDetails</span><span class="params">()</span>: LiveData&lt;Resource&lt;ProductDetails&gt;&gt; </span>&#123;   <span class="comment">// Simple getter</span></span><br><span class="line">        <span class="keyword">return</span> productDetails</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">getSpecialOffers</span><span class="params">()</span>: LiveData&lt;Resource&lt;SpecialOffers&gt;&gt; </span>&#123;     <span class="comment">// Simple getter</span></span><br><span class="line">        <span class="keyword">return</span> specialOffers</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ProductActivity : AppCompatActivity() &#123;</span><br><span class="line"></span><br><span class="line">    lateinit <span class="keyword">var</span> productViewModelFactory: ProductViewModelFactory</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onCreate</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        val viewModel = ViewModelProviders.of(<span class="keyword">this</span>, productViewModelFactory).get(ProductViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">        <span class="title">viewModel</span>.<span class="title">getProductDetails</span>().<span class="title">observe</span>(<span class="title">this</span>, <span class="title">Observer</span> </span>&#123; <span class="comment">/*...*/</span> &#125;)    <span class="comment">// Just setting observer</span></span><br><span class="line">        viewModel.getSpecialOffers().observe(<span class="keyword">this</span>, Observer &#123; <span class="comment">/*...*/</span> &#125;)     <span class="comment">// Just setting observer</span></span><br><span class="line"></span><br><span class="line">        button_offers.setOnClickListener &#123; viewModel.loadSpecialOffers() &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="泄漏-ViewModels"><a href="#泄漏-ViewModels" class="headerlink" title=" 泄漏 ViewModels"></a> 泄漏 ViewModels</h3><p>我们不应该将 View 的引用传递给 ViewModel，但是我们也应该谨慎的将对 ViewModels 的引用传递给其他类，当 Activity 已经 finished，ViewModel 也应该进行垃圾回收。</p>
+<p>示例中是传递一个监听器到 Repository，他是 Singleton 范围的，并且之后不会清楚监听器。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LocationRepository</span>() </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> listener: ((Location) -&gt; Unit)? = <span class="keyword">null</span></span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">setOnLocationChangedListener</span><span class="params">(listener: (Location)</span> -&gt; Unit) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.listener = listener</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> fun <span class="title">onLocationUpdated</span><span class="params">(location: Location)</span> </span>&#123;</span><br><span class="line">        listener?.invoke(location)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MapViewModel: AutoClearViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> val liveData = MutableLiveData&lt;LocationRepository.Location&gt;()</span><br><span class="line">    <span class="keyword">private</span> val repository = LocationRepository()</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        repository.setOnLocationChangedListener &#123;   <span class="comment">// Risky: Passing listener (which holds reference to the MapViewModel)</span></span><br><span class="line">            liveData.value = it                     <span class="comment">// to singleton scoped LocationRepository</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解决方法就是在<strong>onCleared()</strong>方法中移除掉监听器，在 Repository 中将 listener 存储为 <strong>WeakReference</strong>，使用 LiveData 在 Repository 和 ViewModel 之间进行通信。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LocationRepository</span>() </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> listener: ((Location) -&gt; Unit)? = <span class="keyword">null</span></span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">setOnLocationChangedListener</span><span class="params">(listener: (Location)</span> -&gt; Unit) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.listener = listener</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">removeOnLocationChangedListener</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.listener = <span class="keyword">null</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> fun <span class="title">onLocationUpdated</span><span class="params">(location: Location)</span> </span>&#123;</span><br><span class="line">        listener?.invoke(location)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MapViewModel: AutoClearViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> val liveData = MutableLiveData&lt;LocationRepository.Location&gt;()</span><br><span class="line">    <span class="keyword">private</span> val repository = LocationRepository()</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        repository.setOnLocationChangedListener &#123;   <span class="comment">// Risky: Passing listener (which holds reference to the MapViewModel)</span></span><br><span class="line">            liveData.value = it                     <span class="comment">// to singleton scoped LocationRepository</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override <span class="title">onCleared</span><span class="params">()</span> </span>&#123;                            <span class="comment">// GOOD: Listener instance from above and MapViewModel</span></span><br><span class="line">        repository.removeOnLocationChangedListener()  <span class="comment">//       can now be garbage collected</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="将-LiveData-公开为可视的视图"><a href="#将-LiveData-公开为可视的视图" class="headerlink" title="将 LiveData 公开为可视的视图"></a>将 LiveData 公开为可视的视图</h3><p>视图应该只观察 LiveData，yincident 我们应该封装对 MutableLiveData 的访问。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class CatalogueViewModel : ViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// BAD: Exposing mutable LiveData</span></span><br><span class="line">    val products = MutableLiveData&lt;Products&gt;()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// GOOD: Encapsulate access to mutable LiveData through getter</span></span><br><span class="line">    <span class="keyword">private</span> val promotions = MutableLiveData&lt;Promotions&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">getPromotions</span><span class="params">()</span>: LiveData&lt;Promotions&gt; </span>= promotions</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// GOOD: Encapsulate access to mutable LiveData using backing property</span></span><br><span class="line">    <span class="keyword">private</span> val _offers = MutableLiveData&lt;Offers&gt;()</span><br><span class="line">    val offers: LiveData&lt;Offers&gt; = _offers</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">loadData</span><span class="params">()</span></span>&#123;</span><br><span class="line">        products.value = loadProducts()     <span class="comment">// Other classes can also set products value</span></span><br><span class="line">        promotions.value = loadPromotions() <span class="comment">// Only CatalogueViewModel can set promotions value</span></span><br><span class="line">        _offers.value = loadOffers()        <span class="comment">// Only CatalogueViewModel can set offers value</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="每次配置更改之后创建-ViewModel-依赖"><a href="#每次配置更改之后创建-ViewModel-依赖" class="headerlink" title="每次配置更改之后创建 ViewModel 依赖"></a>每次配置更改之后创建 ViewModel 依赖</h3><p>ViewModel 可以在配置更改之类的操作中存活，所以每次配置更改时创建它的依赖关系是多余的，比如下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoviesViewModel</span>(</span></span><br><span class="line">    private val repository: MoviesRepository,</span><br><span class="line">    <span class="keyword">private</span> val stringProvider: StringProvider,</span><br><span class="line">    <span class="keyword">private</span> val authorisationService: AuthorisationService</span><br><span class="line">) : ViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoviesViewModelFactory</span>(   // <span class="title">We</span> <span class="title">need</span> <span class="title">to</span> <span class="title">create</span> <span class="title">instances</span> <span class="title">of</span> <span class="title">below</span> <span class="title">dependencies</span> <span class="title">to</span> <span class="title">create</span> <span class="title">instance</span> <span class="title">of</span> <span class="title">MoviesViewModelFactory</span></span></span><br><span class="line">    private val repository: MoviesRepository,</span><br><span class="line">    <span class="keyword">private</span> val stringProvider: StringProvider,</span><br><span class="line">    <span class="keyword">private</span> val authorisationService: AuthorisationService</span><br><span class="line">) : ViewModelProvider.Factory &#123;</span><br><span class="line"></span><br><span class="line">    override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T &#123;  <span class="comment">// but this method is called by ViewModelProvider only if ViewModel wasn't already created</span></span><br><span class="line">        <span class="keyword">return</span> MoviesViewModel(repository, stringProvider, authorisationService) as T</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MoviesActivity : AppCompatActivity() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    lateinit <span class="keyword">var</span> viewModelFactory: MoviesViewModelFactory</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> lateinit <span class="keyword">var</span> viewModel: MoviesViewModel</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onCreate</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;    <span class="comment">// Called each time Activity is recreated</span></span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_movies)</span><br><span class="line">        injectDependencies() <span class="comment">// Creating new instance of MoviesViewModelFactory</span></span><br><span class="line">        viewModel = ViewModelProviders.of(<span class="keyword">this</span>, viewModelFactory).get(MoviesViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class">    &#125;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">    ...</span></span><br><span class="line"><span class="class">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>每次配置更改时都需要创建一个新的 ViewModelFactory 实例，因此不必要创建其所有依赖项的新实例。</p>
+<p>解决方案就是延迟创建依赖直到 create 方法调用时， 因为他在 Activity/Fragment 生命周期内只调用一次。我们可以使用延迟初始化来实现这一点：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoviesViewModel</span>(</span></span><br><span class="line">    private val repository: MoviesRepository,</span><br><span class="line">    <span class="keyword">private</span> val stringProvider: StringProvider,</span><br><span class="line">    <span class="keyword">private</span> val authorisationService: AuthorisationService</span><br><span class="line">) : ViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoviesViewModelFactory</span>(</span></span><br><span class="line">    private val repository: Provider&lt;MoviesRepository&gt;,             // Passing Providers here</span><br><span class="line">    <span class="keyword">private</span> val stringProvider: Provider&lt;StringProvider&gt;,           <span class="comment">// instead of passing directly dependencies</span></span><br><span class="line">    <span class="keyword">private</span> val authorisationService: Provider&lt;AuthorisationService&gt;</span><br><span class="line">) : ViewModelProvider.Factory &#123;</span><br><span class="line"></span><br><span class="line">    override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T &#123;  <span class="comment">// This method is called by ViewModelProvider only if ViewModel wasn't already created</span></span><br><span class="line">        <span class="keyword">return</span> MoviesViewModel(repository.get(),</span><br><span class="line">                               stringProvider.get(),                <span class="comment">// Deferred creating dependencies only if new insance of ViewModel is needed</span></span><br><span class="line">                               authorisationService.get()</span><br><span class="line">                              ) as T</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MoviesActivity : AppCompatActivity() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    lateinit <span class="keyword">var</span> viewModelFactory: MoviesViewModelFactory</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> lateinit <span class="keyword">var</span> viewModel: MoviesViewModel</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onCreate</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_movies)</span><br><span class="line"></span><br><span class="line">        injectDependencies() <span class="comment">// Creating new instance of MoviesViewModelFactory</span></span><br><span class="line">        viewModel = ViewModelProviders.of(<span class="keyword">this</span>, viewModelFactory).get(MoviesViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class">    &#125;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">    ...</span></span><br><span class="line"><span class="class">&#125;</span></span><br></pre></td></tr></table></figure>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+     
+        
+
+        
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/11/08/Android屏幕适配/" title="Android屏幕适配">Android屏幕适配</a></h2>
+                <p class="excerpt">
+                
+                今日头条适配方案新的适配方案
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-11-08T14:52:10.000Z" class="post-list__meta--date date">2018-11-08</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/android-屏幕适配/">android 屏幕适配</a>
+
+</span><a class="btn-border-small" href="/2018/11/08/Android屏幕适配/">继续阅读</a></div>
+
+            </div>
+        
+   
+</section>
+
+
+
+<section class="post-comments">
+  
+<div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+<script>
+var cloudTieConfig = {
+  url: document.location.href, 
+  sourceId: "",
+  productKey: "7e456de65fb945698c448c72191454ce",
+  target: "cloud-tie-wrapper"
+};
+var yunManualLoad = true;
+Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+</script>
+
+</section>
+
+
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">赵珊珊</a> 创建,
+        使用<a href="https://github.com/skx926/hexo-theme-vno">hexo-theme-vno</a>主题
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="/js/main.js"></script>
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-73055515-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
