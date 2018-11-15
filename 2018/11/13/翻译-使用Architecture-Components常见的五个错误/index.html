@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://zhanfangzxc.github.io">
-  <title>坚持远方</title>
+  <title>[翻译]使用Architecture Components常见的五个错误 | 坚持远方</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="时人莫小池中水，浅处无妨有卧龙。">
-<meta name="keywords" content="Android">
-<meta property="og:type" content="website">
-<meta property="og:title" content="坚持远方">
-<meta property="og:url" content="https://zhanfangzxc.github.io/index.html">
+  <meta name="description" content="原文地址:5 common mistakes when using Architecture Components 文章包含以下内容:  Fragments 中 LiveData Observers 泄漏 每次屏幕旋转都会重新加载数据 ViewModels 泄漏 将 LiveData 公开为可视的视图 每次配置更改之后创建 ViewModels 依赖  Fragments 中 LiveData O">
+<meta name="keywords" content="翻译 android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[翻译]使用Architecture Components常见的五个错误">
+<meta property="og:url" content="https://zhanfangzxc.github.io/2018/11/13/翻译-使用Architecture-Components常见的五个错误/index.html">
 <meta property="og:site_name" content="坚持远方">
-<meta property="og:description" content="时人莫小池中水，浅处无妨有卧龙。">
+<meta property="og:description" content="原文地址:5 common mistakes when using Architecture Components 文章包含以下内容:  Fragments 中 LiveData Observers 泄漏 每次屏幕旋转都会重新加载数据 ViewModels 泄漏 将 LiveData 公开为可视的视图 每次配置更改之后创建 ViewModels 依赖  Fragments 中 LiveData O">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-15T04:47:42.561Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="坚持远方">
-<meta name="twitter:description" content="时人莫小池中水，浅处无妨有卧龙。">
+<meta name="twitter:title" content="[翻译]使用Architecture Components常见的五个错误">
+<meta name="twitter:description" content="原文地址:5 common mistakes when using Architecture Components 文章包含以下内容:  Fragments 中 LiveData Observers 泄漏 每次屏幕旋转都会重新加载数据 ViewModels 泄漏 将 LiveData 公开为可视的视图 每次配置更改之后创建 ViewModels 依赖  Fragments 中 LiveData O">
   
     <link rel="alternative" href="/atom.xml" title="坚持远方" type="application/atom+xml">
   
@@ -166,16 +167,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-翻译-使用Architecture-Components常见的五个错误" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+            <article id="post-翻译-使用Architecture-Components常见的五个错误" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/13/翻译-使用Architecture-Components常见的五个错误/">[翻译]使用Architecture Components常见的五个错误</a>
+    <h1 class="article-title" itemprop="name">
+      [翻译]使用Architecture Components常见的五个错误
     </h1>
   
 
@@ -229,6 +228,27 @@
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -247,16 +267,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/13/翻译-使用Architecture-Components常见的五个错误/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://zhanfangzxc.github.io/2018/11/13/翻译-使用Architecture-Components常见的五个错误/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/08/Android屏幕适配/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android屏幕适配</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -276,124 +355,14 @@
 
 
 
-
   
-    <article id="post-Android屏幕适配" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/08/Android屏幕适配/">Android屏幕适配</a>
-    </h1>
   
 
-        
-        <a href="/2018/11/08/Android屏幕适配/" class="archive-article-date">
-  	<time datetime="2018-11-08T14:52:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="屏幕适配"><a href="#屏幕适配" class="headerlink" title=" 屏幕适配"></a> 屏幕适配</h3><h4 id="今日头条适配方案"><a href="#今日头条适配方案" class="headerlink" title="今日头条适配方案"></a>今日头条适配方案</h4><blockquote>
-<p>density: 1dp 占当前设备多少像素</p>
-</blockquote>
-<blockquote>
-<p>核心原理: 当前设备屏幕总宽度(单位为像素) / 设计图总宽度(单位为 dp) = density</p>
-</blockquote>
-<p>系统就是通过下面的方法来将 dp 转换为 px 的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">float</span> <span class="title">applyDimension</span><span class="params">(<span class="keyword">int</span> unit, <span class="keyword">float</span> value,</span></span></span><br><span class="line"><span class="function"><span class="params">                                       DisplayMetrics metrics)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (unit) &#123;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_PX:</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_DIP:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.density;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_SP:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.scaledDensity;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_PT:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">72</span>);</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_IN:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.xdpi;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_MM:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">25.4f</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>默认以高  或宽中的一个作为基准，进行适配</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">float</span> sNoncompatDensity;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">float</span> sNoncompatScaledDensity;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setCustomDensity</span><span class="params">(@NotNull Activity activity, @NonNull <span class="keyword">final</span> Application application)</span></span>&#123;</span><br><span class="line">    <span class="keyword">final</span> DisplayMetrics appDisplayMetrics = application.getResources().getDisplayMetrics();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(sNoncompatDensity == <span class="number">0</span>)&#123;</span><br><span class="line">        sNoncompatDensity = appDisplayMetrics.density;</span><br><span class="line">        sNoncompatScaledDensity = appDisplayMetrics.scaledDensity;</span><br><span class="line">        application.registerComponentCallbacks(<span class="keyword">new</span> ComponentCallbacks()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onConfigurationChanged</span><span class="params">(Configuration newConfig)</span></span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(newConfig != <span class="keyword">null</span> &amp;&amp; newConfig.fontScale &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                    sNoncompatScaledDensity = application.getResources().getDisplayMetrics().scaledDensity();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLowMemory</span><span class="params">()</span></span>&#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//此处的360是以设计图为360去适配的</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">float</span> targetDensity = appDisplayMetrics.widthPixels / <span class="number">360</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">float</span> targetScaledDensity = targetDensity * (sNoncompatScaledDensity / sNoncompatDensity);</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> targetDesityDpi = (<span class="keyword">int</span>)(<span class="number">160</span> * targetDensity);</span><br><span class="line"></span><br><span class="line">    appDisplayMetrics.Density = targetDensity;</span><br><span class="line">    appDisplayMEtrics.scaledDensity = targetScaledDensity;</span><br><span class="line">    appDisplayMetrics.densityDpi = targetDensityDpi;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> DisplayMetrics activityDisplayMetrics = activity.getResources().getDisplayMetrics();</span><br><span class="line">    activityDisplayMetrics.density = targetDensity;</span><br><span class="line">    activityDisplayMetrics.scaledDensity = targetScaledDensity;</span><br><span class="line">    activityDisplayMetrics.densityDpi = targetDensityDpi;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Smallest-适配方案"><a href="#Smallest-适配方案" class="headerlink" title="Smallest 适配方案"></a>Smallest 适配方案</h4><blockquote>
-<p>以宽度的 dp 为基准，生成所有设备对应的 dimens.xml 文件</p>
-</blockquote>
-<p>使用方法:</p>
-<ol>
-<li>在 Android Studio 中安装 ScreenMatch 插件</li>
-<li>使用 ScreenMatch 生成  所有设备对应的 dimens 文件</li>
-</ol>
-<h4 id="AndroidAutoSize-适配方案"><a href="#AndroidAutoSize-适配方案" class="headerlink" title="AndroidAutoSize 适配方案"></a>AndroidAutoSize 适配方案</h4><p>使用方法：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;manifest&gt;</span><br><span class="line">    &lt;application&gt;</span><br><span class="line">        &lt;meta-data</span><br><span class="line">            android:name=<span class="string">"design_width_in_dp"</span></span><br><span class="line">            android:value=<span class="string">"360"</span>/&gt;</span><br><span class="line">        &lt;meta-data</span><br><span class="line">            android:name=<span class="string">"design_height_in_dp"</span></span><br><span class="line">            android:value=<span class="string">"640"</span>/&gt;</span><br><span class="line">     &lt;/application&gt;</span><br><span class="line">&lt;/manifest&gt;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>自定义的实现 <strong>CustomAdapt</strong></li>
-<li>放弃适配实现<strong>CancelAdapt</strong></li>
-</ol>
-<h3 id="StatusBar-状态栏适配"><a href="#StatusBar-状态栏适配" class="headerlink" title="StatusBar 状态栏适配"></a>StatusBar 状态栏适配</h3><p><strong>设置状态栏颜色</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatusBarUtil.setColor(Activity activity, int color)</span><br></pre></td></tr></table></figure>
-<p><strong>设置状态栏半透明</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatusBarUtil.setTranslucent(Activity activity, int statusBarAlpha)</span><br></pre></td></tr></table></figure>
-<p><strong>设置状态栏全透明</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatusBarUtil.setTransparent(Activity activity)</span><br></pre></td></tr></table></figure>
-<p><strong>为使用 ImageView 作为头部的界面设置状态栏透明</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatusBarUtil.setTranslucentForImageView(Activity activity, int statusBarAlpha, View needOffsetView)</span><br></pre></td></tr></table></figure>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
-<li><a href="https://juejin.im/post/5b7a29736fb9a019d53e7ee2" target="_blank" rel="noopener">骚年你的屏幕适配方式该升级了!（一）-今日头条适配方案</a></li>
-<li><a href="https://juejin.im/post/5ba197e46fb9a05d0b142c62" target="_blank" rel="noopener">骚年你的屏幕适配方式该升级了!（二）-smallestWidth 限定符适配方案</a></li>
-<li><a href="https://juejin.im/post/5bce688e6fb9a05cf715d1c2" target="_blank" rel="noopener">今日头条屏幕适配方案终极版正式发布!</a></li>
-<li><a href="https://mp.weixin.qq.com/s/d9QCoBP6kV9VSWvVldVVwA" target="_blank" rel="noopener">今日头条适配方案</a></li>
-<li><a href="https://www.jianshu.com/p/1302ad5a4b04" target="_blank" rel="noopener">限定符适配方案</a></li>
-<li><a href="https://github.com/laobie/StatusBarUtil" target="_blank" rel="noopener">StatusBarUtil</a></li>
-<li><a href="https://blog.csdn.net/u011810352/article/details/80587531" target="_blank" rel="noopener">Android 刘海屏适配全攻略</a></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android 屏幕适配</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/08/Android屏幕适配/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
+  
 
   
+
   
 
 
@@ -416,8 +385,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
