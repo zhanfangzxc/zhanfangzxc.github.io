@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="坚持远方">
 <meta property="og:description" content=" 屏幕适配今日头条适配方案 density: 1dp 占当前设备多少像素   核心原理: 当前设备屏幕总宽度(单位为像素) / 设计图总宽度(单位为 dp) = density  系统就是通过下面的方法来将 dp 转换为 px 的 12345678910111213141516171819public static float applyDimension(int unit, float va">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-14T11:23:59.349Z">
+<meta property="og:updated_time" content="2018-11-15T04:17:25.809Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android屏幕适配">
 <meta name="twitter:description" content=" 屏幕适配今日头条适配方案 density: 1dp 占当前设备多少像素   核心原理: 当前设备屏幕总宽度(单位为像素) / 设计图总宽度(单位为 dp) = density  系统就是通过下面的方法来将 dp 转换为 px 的 12345678910111213141516171819public static float applyDimension(int unit, float va">
@@ -201,12 +201,22 @@
 <li>自定义的实现 <strong>CustomAdapt</strong></li>
 <li>放弃适配实现<strong>CancelAdapt</strong></li>
 </ol>
-<h3 id="StatusBar状态栏适配"><a href="#StatusBar状态栏适配" class="headerlink" title="StatusBar状态栏适配"></a>StatusBar状态栏适配</h3><h3 id="刘海屏适配"><a href="#刘海屏适配" class="headerlink" title="刘海屏适配"></a>刘海屏适配</h3><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<h3 id="StatusBar-状态栏适配"><a href="#StatusBar-状态栏适配" class="headerlink" title="StatusBar 状态栏适配"></a>StatusBar 状态栏适配</h3><p><strong>设置状态栏颜色</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatusBarUtil.setColor(Activity activity, int color)</span><br></pre></td></tr></table></figure>
+<p><strong>设置状态栏半透明</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatusBarUtil.setTranslucent(Activity activity, int statusBarAlpha)</span><br></pre></td></tr></table></figure>
+<p><strong>设置状态栏全透明</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatusBarUtil.setTransparent(Activity activity)</span><br></pre></td></tr></table></figure>
+<p><strong>为使用 ImageView 作为头部的界面设置状态栏透明</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatusBarUtil.setTranslucentForImageView(Activity activity, int statusBarAlpha, View needOffsetView)</span><br></pre></td></tr></table></figure>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
 <li><a href="https://juejin.im/post/5b7a29736fb9a019d53e7ee2" target="_blank" rel="noopener">骚年你的屏幕适配方式该升级了!（一）-今日头条适配方案</a></li>
 <li><a href="https://juejin.im/post/5ba197e46fb9a05d0b142c62" target="_blank" rel="noopener">骚年你的屏幕适配方式该升级了!（二）-smallestWidth 限定符适配方案</a></li>
 <li><a href="https://juejin.im/post/5bce688e6fb9a05cf715d1c2" target="_blank" rel="noopener">今日头条屏幕适配方案终极版正式发布!</a></li>
 <li><a href="https://mp.weixin.qq.com/s/d9QCoBP6kV9VSWvVldVVwA" target="_blank" rel="noopener">今日头条适配方案</a></li>
 <li><a href="https://www.jianshu.com/p/1302ad5a4b04" target="_blank" rel="noopener">限定符适配方案</a></li>
+<li><a href="https://github.com/laobie/StatusBarUtil" target="_blank" rel="noopener">StatusBarUtil</a></li>
+<li><a href="https://blog.csdn.net/u011810352/article/details/80587531" target="_blank" rel="noopener">Android 刘海屏适配全攻略</a></li>
 </ul>
 
       
