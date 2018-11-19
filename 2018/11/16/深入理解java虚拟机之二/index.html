@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://zhanfangzxc.github.io">
-  <title>Tag: 翻译 android | 坚持远方</title>
+  <title>深入理解java虚拟机之二 | 坚持远方</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="时人莫小池中水，浅处无妨有卧龙。">
-<meta name="keywords" content="Android">
-<meta property="og:type" content="website">
-<meta property="og:title" content="坚持远方">
-<meta property="og:url" content="https://zhanfangzxc.github.io/tags/翻译-android/index.html">
+  <meta name="description" content="对象已死吗？引用计数算法 给对象中添加一个引用计数器，每当有一个地方引用它时，计数器值加 1，当引用失效时，计数器值就减 1；任何时刻计数器为 0 的对象就是不能再被使用的。 很难解决对象之间相互循环引用的问题。  可达性分析算法 这个算法的思路就是通过一系列称为“GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链，当一个对象到 GC Roots 没有任何引用">
+<meta name="keywords" content="虚拟机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解java虚拟机之二">
+<meta property="og:url" content="https://zhanfangzxc.github.io/2018/11/16/深入理解java虚拟机之二/index.html">
 <meta property="og:site_name" content="坚持远方">
-<meta property="og:description" content="时人莫小池中水，浅处无妨有卧龙。">
+<meta property="og:description" content="对象已死吗？引用计数算法 给对象中添加一个引用计数器，每当有一个地方引用它时，计数器值加 1，当引用失效时，计数器值就减 1；任何时刻计数器为 0 的对象就是不能再被使用的。 很难解决对象之间相互循环引用的问题。  可达性分析算法 这个算法的思路就是通过一系列称为“GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链，当一个对象到 GC Roots 没有任何引用">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-19T08:33:28.945Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="坚持远方">
-<meta name="twitter:description" content="时人莫小池中水，浅处无妨有卧龙。">
+<meta name="twitter:title" content="深入理解java虚拟机之二">
+<meta name="twitter:description" content="对象已死吗？引用计数算法 给对象中添加一个引用计数器，每当有一个地方引用它时，计数器值加 1，当引用失效时，计数器值就减 1；任何时刻计数器为 0 的对象就是不能再被使用的。 很难解决对象之间相互循环引用的问题。  可达性分析算法 这个算法的思路就是通过一系列称为“GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链，当一个对象到 GC Roots 没有任何引用">
   
     <link rel="alternative" href="/atom.xml" title="坚持远方" type="application/atom+xml">
   
@@ -166,60 +167,294 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-深入理解java虚拟机之二" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/13/翻译-使用Architecture-Components常见的五个错误/" class="archive-article-date">
-  	<time datetime="2018-11-13T09:33:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/13/翻译-使用Architecture-Components常见的五个错误/">[翻译]使用Architecture Components常见的五个错误</a>
+    <h1 class="article-title" itemprop="name">
+      深入理解java虚拟机之二
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/11/16/深入理解java虚拟机之二/" class="archive-article-date">
+  	<time datetime="2018-11-16T02:46:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="对象已死吗？"><a href="#对象已死吗？" class="headerlink" title="对象已死吗？"></a>对象已死吗？</h3><h4 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h4><ol>
+<li>给对象中添加一个引用计数器，每当有一个地方引用它时，计数器值加 1，当引用失效时，计数器值就减 1；任何时刻计数器为 0 的对象就是不能再被使用的。</li>
+<li>很难解决对象之间相互循环引用的问题。</li>
+</ol>
+<h4 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h4><ol>
+<li>这个算法的思路就是通过一系列称为“GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链，当一个对象到 GC Roots 没有任何引用链相连时，则证明此对象是不可以用的。</li>
+<li>GC Roots 的对象包括下面几种：<ol>
+<li>虚拟机栈中引用的对象</li>
+<li>方法区中类静态属性引用的对象</li>
+<li>方法区中常量引用的对象</li>
+<li>本地方法栈中 JNI(即一般说的 Native 方法)引用的对象。</li>
+</ol>
+</li>
+</ol>
+<p><strong>Java 引用</strong></p>
+<ol>
+<li>强引用(Strong Reference): 只要强引用还存在，垃圾收集器永远不会回收掉被应用的对象。</li>
+<li>软引用(Soft Reference): 用来描述一些还有用但并非必须的对象。对于软应用关联的对象，在系统将要发生溢出异常之前，将会把这些对象列进回收范围之中进行第二次回收，如果这次回收还没有足够的内存，才会抛出内存溢出异常。</li>
+<li>弱引用(Weak Reference): 也是用来描述非必需对象的，但是他的强度比软引用跟弱一些，被弱引用关联的对象只能生存到下一次垃圾收集发生之前，当垃圾收集器工作时，无论当前内存是否足够，都会回收掉只被弱引用关联的对象。</li>
+<li>虚引用(Phantom Reference): 也被称为幽灵引用或者幻影引用，它是最弱的一种引用关系。</li>
+</ol>
+<h4 id="生存还是死亡"><a href="#生存还是死亡" class="headerlink" title="生存还是死亡"></a>生存还是死亡</h4><p>要真正宣告一个对象死亡，至少要经历两次标记过程：</p>
+<ol>
+<li>如果对象在进行可达性分析后发现没有与 GC Roots 相连接的引用链，那他将会被第一次标记并且进行  一次筛选，筛选的条件时此对象是否有必要执行 finalize()方法，当对象没有覆盖 finalize()方法，或者 finalize()方法已经被虚拟机吊用过，虚拟机将这两种情况都视为“没有必要执行”。</li>
+<li>如果这个对象被判定为有必要执行 finalize()方法，那么这个对象将会防止在一个叫做 F-Queue 的队列之中，并在稍后由一个由虚拟机自动建立的、优先级低的 finalize 线程去执行他。finalize 是对象逃脱死亡的命运的最后一次机会，稍后 GC 将对 F-Queue 中的对象进行第二次小规模标记，如果对象要在 finalize 中成功拯救自己——只要重新与引用链上的任何一个对象建立关联即可。</li>
+</ol>
+<p><strong>一个对象的 finalize()方法最多只会被系统自动调用一次</strong></p>
+<h4 id="回收方法区"><a href="#回收方法区" class="headerlink" title="回收方法区"></a>回收方法区</h4><ol>
+<li>永久代的垃圾收集主要回收两部分内容：废弃常量和无用的类。</li>
+</ol>
+<p>类需要满足下面三个条件才算是“无用的类”:</p>
+<ol>
+<li>该类所有的实例都已经被回收，也就是 java 堆中不存在该类的任何实例。</li>
+<li>加载该类的 ClassLoader 已经被回收</li>
+<li>该类对应的 java.lang.Class 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+</ol>
+<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h4><ol>
+<li>算法分为标记和清除两个阶段，首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象。</li>
+<li>标记和清除两个过程效率都不高，另一个是空间问题，标记清除之后会产生大量不连续的内存碎片， 空间碎片太多会导致以后在程序运行过程中需要分配较大对象时，无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作。</li>
+</ol>
+<h4 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h4><ol>
+<li>将可用内存按容量划分为大小相等的两块，每次只使用其中的一块，当这一块的内存用完了，就将还存活的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</li>
+<li>实现简单，运行高效，只是这种算法的代价是将内存缩小为原来的一半。</li>
+<li>将内存分为一块较大的 Eden 区和两块较小的 Survivor 空间，每次使用 Eden 和其中一块 Survivor，当回收时，将 Eden 和 Survivor 中还存活着的对象一次性地复制到另外一块 Survivor 空间上，最后清理掉 Eden 和刚才用的 Survivor 空间，HotSpot 虚拟机默认 Eden 和 Survivor 的大小比例是 8:1</li>
+<li>当 Survivor 空间不够用时，需要依赖其他内存(这里指老年代)进行分配担保。</li>
+</ol>
+<h4 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h4><ol>
+<li>标记-整理算法，标记过程仍然与标记-清除算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。</li>
+</ol>
+<h4 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h4><ol>
+<li>在新生代中，每次垃圾收集时都发现有大批对象死去，只有少量存活，那就选用复制算法，只需要付出少量存活对象的复制成本就可以完成手机。</li>
+<li>老年代中因为对象存活率高,没有额外空间对他进行分配担保，就必须采用“标记-清理”或者“标记-整理”算法来进行回收。</li>
+</ol>
+<h3 id="HotSpot-的算法实现"><a href="#HotSpot-的算法实现" class="headerlink" title="HotSpot 的算法实现"></a>HotSpot 的算法实现</h3><h4 id="枚举根节点"><a href="#枚举根节点" class="headerlink" title="枚举根节点"></a>枚举根节点</h4><p>在整个分析期间，整个执行系统看起来就像被冻结在某个时间点上，不可以出现分析过程中对象引用关系还在不断变化的情况，该点不满足话分析结果就无法保证准确性，这点是导致 GC 进行时必须停顿所有 Java 执行线程的其中一个重要原因。</p>
+<p>当执行系统停顿下来之后，并不需要一个不漏的执行上下文和全局的引用位置，虚拟机应当有办法直接得知哪些地方存放着对象引用。在 Hotspot 虚拟机中，是使用一组称为 OopMap 的数据结构来达到这个目的，在类加载完成的时候，Hotspot 就把对象内什么偏移量上是什么类型的数据计算出来，在 JIT 编译过程中，也会在特定的位置记录下栈和寄存器中哪些位置是引用。</p>
+<h4 id="安全点"><a href="#安全点" class="headerlink" title="安全点"></a>安全点</h4><p>HotSpot 虚拟机没有为每条指令都生成 OopMap。只有在特定的位置记录了这些信息，这些位置称为<strong>安全点</strong>,即程序执行时并非在所有地方都能停顿下来开始 GC，只有在到达安全点时才能暂停。</p>
+<p><strong>安全点(SafePoint)</strong></p>
+<ol>
+<li>SafePoint 的选定既不能太少以至于让 GC 等待时间太长，也不能过于频繁以至于过分增大运行时的负荷.</li>
+<li>安全点的选定是以是否具有让程序长时间执行的特征为标准进行选定的。长时间执行的最明显特征就是指令序列复用。</li>
+</ol>
+<p>对于安全点，另一个需要考虑的问题是如何在 GC 发生时让所有线程都跑到最近的安全点上再停顿下来，这里有两种方案:</p>
+<ol>
+<li>抢先式中断：需要线程的执行代码主动去配合，GC 发生时，首先把所有线程全部中断，如果有的线程的中断地方不再安全点上，就恢复线程，让他跑到安全点上，几乎没有虚拟机采用抢先式中断。</li>
+<li>主动式中断：当 GC 需要中断线程的时候，不直接对线程操作，仅仅简单的设置一个标志，各个线程执行时主动去轮询这个标志，发现中断标志位真时就自己中断挂起，轮询标志的地方和安全点是重合的，另外再加上创建对象需要分配内存的地方。</li>
+</ol>
+<h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><h4 id="Serial-收集器"><a href="#Serial-收集器" class="headerlink" title="Serial 收集器"></a>Serial 收集器</h4><p>是一个单线程的收集器，在垃圾收集时必须暂停其他所有的工作线程，直到他收集结束。</p>
+<h4 id="ParNew-收集器"><a href="#ParNew-收集器" class="headerlink" title="ParNew 收集器"></a>ParNew 收集器</h4><ol>
+<li>是 Serial 收集器的多线程版本</li>
+<li>可以使用-XX：ParallelGCThreads 参数来限制垃圾收集的线程数</li>
+</ol>
+<blockquote>
+<p>并行：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。<br>并发：指用户线程与垃圾收集线程同时执行，用户程序在继续运行，而垃圾收集程序运行于另一个 CPU 上。</p>
+</blockquote>
+<h4 id="Parallel-Scavenge-收集器"><a href="#Parallel-Scavenge-收集器" class="headerlink" title="Parallel Scavenge 收集器"></a>Parallel Scavenge 收集器</h4><ol>
+<li>是一个新生代收集器，也是使用复制算法的收集器，是并行的多线程收集器</li>
+<li>吞吐量 = 运行用户代码时间/(运行用户代码时间+垃圾收集时间)</li>
+<li>-XX:MaxGCPauseMillis 控制最大垃圾收集停顿时间</li>
+<li>-XX:GCTimeRatio 设置吞吐量大小 值是一个大于 0 且小于 100 的整数</li>
+<li>-XX:+UseAdaptiveSizePolicy 开关参数，这个参数打开之后，就不需要手工指定新生代的大小</li>
+</ol>
+<h4 id="Serial-Old-收集器"><a href="#Serial-Old-收集器" class="headerlink" title="Serial Old 收集器"></a>Serial Old 收集器</h4><ol>
+<li>是 Serial 收集器的老年代版本，同样是一个单线程收集器，使用标记-整理算法</li>
+<li>给 client 模式下的虚拟机使用</li>
+</ol>
+<h4 id="Parallel-Old-收集器"><a href="#Parallel-Old-收集器" class="headerlink" title="Parallel Old 收集器"></a>Parallel Old 收集器</h4><ol>
+<li>是 Parallel Scavenge 收集器的老年代版本，使用多线程标记-整理算法。</li>
+</ol>
+<h4 id="CMS-收集器"><a href="#CMS-收集器" class="headerlink" title="CMS 收集器"></a>CMS 收集器</h4><ol>
+<li>以获得最短回收停顿时间为目标的收集器</li>
+<li>基于标记-清楚算法实现的。</li>
+</ol>
+<h3 id="G1-收集器"><a href="#G1-收集器" class="headerlink" title="G1 收集器"></a>G1 收集器</h3><ol>
+<li>G1 是面向服务端应用的垃圾收集器。</li>
+<li>并行与并发</li>
+<li>分代手机</li>
+<li>空间整合：是基于标记-整理算法实现的收集器</li>
+<li>可预测的停顿</li>
+</ol>
+<p><strong>G1 收集器的运作分为下面几个步骤</strong></p>
+<ol>
+<li>初始标记</li>
+<li>并发标记</li>
+<li>最终标记</li>
+<li>筛选回收</li>
+</ol>
+<h3 id="内存分配与回收策略"><a href="#内存分配与回收策略" class="headerlink" title="内存分配与回收策略"></a>内存分配与回收策略</h3><ol>
+<li>对象优先在 Eden 分配: 当 Eden 区没有足够空间进行分配时，虚拟机将发起一次 Minor GC。</li>
+<li>大对象直接进入老年代<ol>
+<li>大对象是指需要大量连续内存空间的 Java 对象，最典型的大对象就是那种很长的字符串以及数组。</li>
+</ol>
+</li>
+<li>长期存活的对象将进入老年代<ol>
+<li>虚拟机给每个对象定义了一个对象年龄计数器，如果对象在 Eden 出生并经过第一次 Minor GC 后仍然存活，并且能被 Survivor 容纳的话，将被移动到 Survivor 空间中，并且对象年龄设为 1.</li>
+<li>当它的年龄增加到一定程度，就将会被晋升到老年代中。对象晋升老年代的年龄阈值，可以通过参数-XX:MaxTenuringThreshold 设置。</li>
+</ol>
+</li>
+<li>动态对象年龄判定<ol>
+<li>如果在Survivor空间中相同年龄所有对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代，无须等到MaxTenuringThreshold中要求的年龄。</li>
+</ol>
+</li>
+<li>空间分配担保</li>
+</ol>
+<p><strong>Minor GC 和 Full GC</strong></p>
+<ol>
+<li>Minor GC(新生代 GC): 指发生在新生代的垃圾收集动作，Minor GC 非常频繁，一般回收速度有比较快。</li>
+<li>Full GC(老年代 GC): 指发生在老年代的 GC，经常会伴随至少一次的 Minor GC，速度一般会 Minor GC 慢 10 倍以上。</li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">翻译 android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">虚拟机</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://zhanfangzxc.github.io/2018/11/16/深入理解java虚拟机之二/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/11/15/深入理解java虚拟机之一/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">深入理解java虚拟机之一</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -242,9 +477,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
