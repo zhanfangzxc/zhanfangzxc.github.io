@@ -44,7 +44,7 @@ class BooksFragment: Fragment() {
 
 这个问题可以在[这里](https://medium.com/@BladeCoder/architecture-components-pitfalls-part-1-9300dd969808)找到更多的解释
 
-最终解决方案就是使用 fragments 中 view 的生命周期开来代替 fragments 的生命周期，**getViewLifeCycleOwner()**和**getViewLifeCycleOwnerLiveData()**在 support library 28.0.0 和 AndroidX 1.0.0 中被提供,这样每次 fragment 中 views 被销毁的时候，LiveData 都会移除掉 observers。
+最终解决方案就是使用 fragments 中 view 的生命周期来代替 fragments 的生命周期，**getViewLifeCycleOwner()**和**getViewLifeCycleOwnerLiveData()**在 support library 28.0.0 和 AndroidX 1.0.0 中被提供,这样每次 fragment 中 views 被销毁的时候，LiveData 都会移除掉 observers。
 
 ```java
 class BooksFragment : Fragment() {

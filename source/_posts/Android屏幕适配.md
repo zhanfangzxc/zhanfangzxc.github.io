@@ -36,7 +36,7 @@ public static float applyDimension(int unit, float value,
     }
 ```
 
-1. 默认以高  或宽中的一个作为基准，进行适配
+1. 默认以高或宽中的一个作为基准，进行适配
 
 ```java
 private static float sNoncompatDensity;
