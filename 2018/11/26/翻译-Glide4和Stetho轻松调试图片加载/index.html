@@ -6,20 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://zhanfangzxc.github.io">
-  <title>jvm | 坚持远方</title>
+  <title>翻译-Glide4和Stetho轻松调试图片加载 | 坚持远方</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="时人莫小池中水，浅处无妨有卧龙。">
-<meta name="keywords" content="Android">
-<meta property="og:type" content="website">
-<meta property="og:title" content="jvm">
-<meta property="og:url" content="https://zhanfangzxc.github.io/jvm/index.html">
+  <meta name="description" content="原文地址: Glide4 and Stetho to easily debug your image loading system  Glide 是谷歌提供的图片加载的库，可以允许你选择自己的网络加载模块(此处使用 OkHttp)。 Stetho 是一个 Android 调试桥，由 facebook 创建的，可以通过 Chrome 来监视 app 的网络加载，数据库以及视图层级，他是帮助你分析应用">
+<meta name="keywords" content="android glide">
+<meta property="og:type" content="article">
+<meta property="og:title" content="翻译-Glide4和Stetho轻松调试图片加载">
+<meta property="og:url" content="https://zhanfangzxc.github.io/2018/11/26/翻译-Glide4和Stetho轻松调试图片加载/index.html">
 <meta property="og:site_name" content="坚持远方">
-<meta property="og:description" content="时人莫小池中水，浅处无妨有卧龙。">
+<meta property="og:description" content="原文地址: Glide4 and Stetho to easily debug your image loading system  Glide 是谷歌提供的图片加载的库，可以允许你选择自己的网络加载模块(此处使用 OkHttp)。 Stetho 是一个 Android 调试桥，由 facebook 创建的，可以通过 Chrome 来监视 app 的网络加载，数据库以及视图层级，他是帮助你分析应用">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-15T04:47:34.136Z">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/1600/1*swSj8FHmdBFIgsLWzN7KbQ.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/1600/1*Q3Nc4e4gRJalaltwvP5Vtg.png">
+<meta property="og:updated_time" content="2018-11-26T03:30:51.902Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jvm">
-<meta name="twitter:description" content="时人莫小池中水，浅处无妨有卧龙。">
+<meta name="twitter:title" content="翻译-Glide4和Stetho轻松调试图片加载">
+<meta name="twitter:description" content="原文地址: Glide4 and Stetho to easily debug your image loading system  Glide 是谷歌提供的图片加载的库，可以允许你选择自己的网络加载模块(此处使用 OkHttp)。 Stetho 是一个 Android 调试桥，由 facebook 创建的，可以通过 Chrome 来监视 app 的网络加载，数据库以及视图层级，他是帮助你分析应用">
+<meta name="twitter:image" content="https://cdn-images-1.medium.com/max/1600/1*swSj8FHmdBFIgsLWzN7KbQ.png">
   
     <link rel="alternative" href="/atom.xml" title="坚持远方" type="application/atom+xml">
   
@@ -167,27 +170,46 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope="" itemprop="blogPost">
+            <article id="post-翻译-Glide4和Stetho轻松调试图片加载" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      jvm
+      翻译-Glide4和Stetho轻松调试图片加载
     </h1>
   
 
         
-        <a href="/jvm/index.html" class="archive-article-date">
-  	<time datetime="2018-11-15T04:33:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-15</time>
+        <a href="/2018/11/26/翻译-Glide4和Stetho轻松调试图片加载/" class="archive-article-date">
+  	<time datetime="2018-11-26T03:03:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>原文地址: <a href="https://medium.com/@akaita/glide4-and-stetho-to-easily-debug-your-image-loading-system-c274d0d9966b" target="_blank" rel="noopener">Glide4 and Stetho to easily debug your image loading system</a></p>
+<ol>
+<li>Glide 是谷歌提供的图片加载的库，可以允许你选择自己的网络加载模块(此处使用 OkHttp)。</li>
+<li>Stetho 是一个 Android 调试桥，由 facebook 创建的，可以通过 Chrome 来监视 app 的网络加载，数据库以及视图层级，他是帮助你分析应用程序和调试网络问题的优秀的工具。</li>
+</ol>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*swSj8FHmdBFIgsLWzN7KbQ.png" alt="stetho"></p>
+<h3 id="设置-Stetho"><a href="#设置-Stetho" class="headerlink" title="设置 Stetho"></a>设置 Stetho</h3><p>添加依赖到 build.gradle 文件中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dependencies&#123;</span><br><span class="line">    implementation &apos;com.facebook.stetho:stetho:1.5.0&apos;</span><br><span class="line">    implementation &apos;com.facebook.stetho:stetho-okhttp3:1.5.0&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br>在 Application 中初始化 Stetho:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class MyApplication: Application()&#123;</span><br><span class="line">    override fun onCreate()&#123;</span><br><span class="line">        super.onCreate()</span><br><span class="line"></span><br><span class="line">        Stetho.initializeWithDefaults(this)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="设置-Glide4"><a href="#设置-Glide4" class="headerlink" title="设置 Glide4"></a>设置 Glide4</h3><p>添加依赖和注解处理器到 build.gradle 中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;kotlin-kapt&apos;</span><br><span class="line"></span><br><span class="line">dependencies&#123;</span><br><span class="line">    implementation &apos;com.github.bumptech.glide:glide:4.8.0&apos;</span><br><span class="line">    implementation &apos;com.github.bumptech.glide:okhttp3-integration:4.8.0&apos;</span><br><span class="line">    kapt &apos;com.github.bumptech.glide:complier:4.8.0&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果使用了混淆，就添加下面的规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># GLIDE</span><br><span class="line">-keep public class * implements com.bumptech.glide.module.GlideModule</span><br><span class="line">-keep public class * extends com.bumptech.glide.module.AppGlideModule</span><br><span class="line">-keep public enum com.bumptech.glide.load.ImageHeaderParser$** &#123;</span><br><span class="line">  **[] $VALUES;</span><br><span class="line">  public *;</span><br><span class="line">&#125;</span><br><span class="line">-keep class com.bumptech.glide.GeneratedAppGlideModuleImpl</span><br><span class="line"></span><br><span class="line"># OKHTTP3</span><br><span class="line">-dontwarn javax.annotation.**</span><br><span class="line">-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase</span><br><span class="line">-dontwarn org.codehaus.mojo.animal_sniffer.*</span><br><span class="line">-dontwarn okhttp3.internal.platform.ConscryptPlatform</span><br></pre></td></tr></table></figure>
+<h3 id="连接-Glide4-和-Stetho"><a href="#连接-Glide4-和-Stetho" class="headerlink" title="连接 Glide4 和 Stetho"></a>连接 Glide4 和 Stetho</h3><p>使用<strong>@GlideModule</strong> 注解创建 <strong>AppGlideModule</strong>，该模块主要用来让 Glide4 使用  包含 Stetho 集成的 Okhttp3 客户端。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@GlideModule</span><br><span class="line">class OkHttp3GlideModule : AppGlideModule() &#123;</span><br><span class="line"></span><br><span class="line">    override fun registerComponents(context: Context, glide: Glide, registry: Registry) &#123;</span><br><span class="line">        val client = OkHttpClient.Builder()</span><br><span class="line">                .addNetworkInterceptor(StethoInterceptor())</span><br><span class="line">                .build()</span><br><span class="line"></span><br><span class="line">        registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(client))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Glide4 附带一些预构建模块，我们需要告诉 Glide 使用我们自定义的，而不是 Glide 自带的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;application&gt;</span><br><span class="line"></span><br><span class="line">        &lt;meta-data android:name=&quot;com.bumptech.glide.integration.okhttp3.OkHttpGlideModule&quot; tools:node=&quot;remove&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/application&gt;</span><br><span class="line"></span><br><span class="line">&lt;/manifest&gt;</span><br></pre></td></tr></table></figure>
+<p> 此时，加载一些图片，就能看到下图：<br><img src="https://cdn-images-1.medium.com/max/1600/1*Q3Nc4e4gRJalaltwvP5Vtg.png" alt=""></p>
+
       
 
       
@@ -216,6 +238,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">android glide</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -266,7 +299,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://zhanfangzxc.github.io/jvm/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://zhanfangzxc.github.io/2018/11/26/翻译-Glide4和Stetho轻松调试图片加载/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -278,6 +311,16 @@
 </article>
 
   
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/19/深入理解java虚拟机之三/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">深入理解java虚拟机之三</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -328,7 +371,7 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
