@@ -6,19 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://zhanfangzxc.github.io">
-  <title>Tag: android | 坚持远方</title>
+  <title>java核心技术之Vector ArrayList LinkedList对比 | 坚持远方</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="时人莫小池中水，浅处无妨有卧龙。">
-<meta name="keywords" content="Android">
-<meta property="og:type" content="website">
-<meta property="og:title" content="坚持远方">
-<meta property="og:url" content="https://zhanfangzxc.github.io/tags/android/index.html">
+  <meta name="description" content="Vector  线程安全的动态数组，不建议选择，同步有额外开销 内部使用对象数组来保存数据，可以根据需要自动增加容量 数组已满时，会创建新的数组，并拷贝原来的数组数据 默认创建一个大小为10的Object数组，并将capacityIncrement设置为0；当插入元素数组大小不够时，如果capacityIncrement大于0，则将Object数组的大小扩充为现有size+capacityIncr">
+<meta name="keywords" content="java 集合 list">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java核心技术之Vector ArrayList LinkedList对比">
+<meta property="og:url" content="https://zhanfangzxc.github.io/2018/12/12/java核心技术之Vector-ArrayList-LinkedList对比/index.html">
 <meta property="og:site_name" content="坚持远方">
-<meta property="og:description" content="时人莫小池中水，浅处无妨有卧龙。">
+<meta property="og:description" content="Vector  线程安全的动态数组，不建议选择，同步有额外开销 内部使用对象数组来保存数据，可以根据需要自动增加容量 数组已满时，会创建新的数组，并拷贝原来的数组数据 默认创建一个大小为10的Object数组，并将capacityIncrement设置为0；当插入元素数组大小不够时，如果capacityIncrement大于0，则将Object数组的大小扩充为现有size+capacityIncr">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/12/images/list.png">
+<meta property="og:updated_time" content="2018-12-12T05:56:38.968Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="坚持远方">
-<meta name="twitter:description" content="时人莫小池中水，浅处无妨有卧龙。">
+<meta name="twitter:title" content="java核心技术之Vector ArrayList LinkedList对比">
+<meta name="twitter:description" content="Vector  线程安全的动态数组，不建议选择，同步有额外开销 内部使用对象数组来保存数据，可以根据需要自动增加容量 数组已满时，会创建新的数组，并拷贝原来的数组数据 默认创建一个大小为10的Object数组，并将capacityIncrement设置为0；当插入元素数组大小不够时，如果capacityIncrement大于0，则将Object数组的大小扩充为现有size+capacityIncr">
+<meta name="twitter:image" content="https://zhanfangzxc.github.io/2018/12/12/images/list.png">
   
     <link rel="alternative" href="/atom.xml" title="坚持远方" type="application/atom+xml">
   
@@ -166,60 +169,216 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-java核心技术之Vector-ArrayList-LinkedList对比" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/15/Android-Studio常用命令/" class="archive-article-date">
-  	<time datetime="2018-11-15T08:30:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-15</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/15/Android-Studio常用命令/">Android Studio常用命令</a>
+    <h1 class="article-title" itemprop="name">
+      java核心技术之Vector ArrayList LinkedList对比
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/12/12/java核心技术之Vector-ArrayList-LinkedList对比/" class="archive-article-date">
+  	<time datetime="2018-12-12T03:24:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Vector</strong></p>
+<ol>
+<li>线程安全的动态数组，不建议选择，同步有额外开销</li>
+<li>内部使用对象数组来保存数据，可以根据需要自动增加容量</li>
+<li>数组已满时，会创建新的数组，并拷贝原来的数组数据</li>
+<li>默认创建一个大小为10的Object数组，并将capacityIncrement设置为0；当插入元素数组大小不够时，如果capacityIncrement大于0，则将Object数组的大小扩充为现有size+capacityIncrement, 如果capacityIncrement&lt;=0,则将Object数组的大小扩为现有大小的2倍。</li>
+</ol>
+<p><strong>ArrayList</strong></p>
+<ol>
+<li>动态数组</li>
+<li>不是线程安全的</li>
+<li>可以根据需要增加容量</li>
+<li>扩容时会提高50%,扩容过程需要调用底层System.arraycopy()方法进行大量的数组复制操作，删除时不会减少数组容量，可以调用trimToSize()方法，查找元素时需要遍历数组，对于非null元素采用equals方式查找。</li>
+<li>插入删除速度慢，检索速度快</li>
+</ol>
+<p><strong>LinkedList</strong></p>
+<ol>
+<li>双向链表</li>
+<li>不需要调整容量</li>
+<li>不是线程安全的</li>
+<li>插入元素时，需创建一个Entry对象，并更新该元素的前后元素的引用，查找元素时，需要遍历链表；删除元素，需要遍历链表，找到要删除的元素</li>
+<li>增加删除速度快，检索速度慢</li>
+</ol>
+<h3 id="三者适合场景"><a href="#三者适合场景" class="headerlink" title="三者适合场景"></a>三者适合场景</h3><ol>
+<li>Vector和ArrayList适合随机访问，除了尾部插入和删除元素，其余操作性能相对较差</li>
+<li>LinkedList进行节点插入、删除，所以性能高效，但是随机访问要比上面两个慢</li>
+</ol>
+<h3 id="需要掌握的排序算法"><a href="#需要掌握的排序算法" class="headerlink" title="需要掌握的排序算法"></a>需要掌握的排序算法</h3><ol>
+<li>内部排序：归并排序、交换排序(冒泡，快排)、选择排序、插入排序等。</li>
+<li>外部排序：掌握利用内存和外部存储处理超大数据集</li>
+</ol>
+<p><img src="../images/list.png" alt="list"></p>
+<ol>
+<li>List</li>
+<li>Set: 不允许插入重复元素<ol>
+<li>TreeSet 支持自然顺序访问，添加、删除、包含等操作相对低效</li>
+<li>HashSet 利用哈希算法 常数时间的添加、删除、包含等操作，但是不保证有序，初始化时，不要把容量设置过大</li>
+<li>LinkedHashSet 内部构建了一个记录插入顺序的双向链表，性能略低于HashSet。</li>
+</ol>
+</li>
+<li>Queue/Deque</li>
+</ol>
+<h3 id="java默认提供的排序算法"><a href="#java默认提供的排序算法" class="headerlink" title="java默认提供的排序算法"></a>java默认提供的排序算法</h3><ol>
+<li>对于原始数据类型，目前使用的是双轴快速排序，是一种改进的快速排序算法，<a href="http://hg.openjdk.java.net/jdk/jdk/file/26ac622a4cab/src/java.base/share/classes/java/util/DualPivotQuicksort.java" target="_blank" rel="noopener">源码地址</a></li>
+<li>对于对象数据类型，目前使用的是<a href="http://hg.openjdk.java.net/jdk/jdk/file/26ac622a4cab/src/java.base/share/classes/java/util/TimSort.java" target="_blank" rel="noopener">TimSort</a>,思想上是一种归并和二分插入排序结合的优化排序算法，思路是查找数据集中已经排好序的分区，然后合并这些分区来达到排序的目的。</li>
+</ol>
+<blockquote>
+<p>Collections提供了一系列的synchronized方法</p>
+<p>List list = Collections.synchronizedList(new ArrayList());</p>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">java 集合 list</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://zhanfangzxc.github.io/2018/12/12/java核心技术之Vector-ArrayList-LinkedList对比/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/12/11/Android卡顿优化/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android卡顿优化</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -242,9 +401,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

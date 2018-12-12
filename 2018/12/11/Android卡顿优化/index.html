@@ -6,19 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://zhanfangzxc.github.io">
-  <title>Tag: android | 坚持远方</title>
+  <title>Android卡顿优化 | 坚持远方</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="时人莫小池中水，浅处无妨有卧龙。">
-<meta name="keywords" content="Android">
-<meta property="og:type" content="website">
-<meta property="og:title" content="坚持远方">
-<meta property="og:url" content="https://zhanfangzxc.github.io/tags/android/index.html">
+  <meta name="description" content="CPU 时间 用户时间：执行用户态应用程序代码所消耗的时间 系统时间：执行内核态系统调用所消耗的时间，包括 I/O、锁、中断以及其他系统调用的时间。  获取设备的 CPU 信息 12345// 获取CPU核心数cat /sys/devices/system/cpu/possible// 获取CPU的频率cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo">
+<meta name="keywords" content="Android 优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android卡顿优化">
+<meta property="og:url" content="https://zhanfangzxc.github.io/2018/12/11/Android卡顿优化/index.html">
 <meta property="og:site_name" content="坚持远方">
-<meta property="og:description" content="时人莫小池中水，浅处无妨有卧龙。">
+<meta property="og:description" content="CPU 时间 用户时间：执行用户态应用程序代码所消耗的时间 系统时间：执行内核态系统调用所消耗的时间，包括 I/O、锁、中断以及其他系统调用的时间。  获取设备的 CPU 信息 12345// 获取CPU核心数cat /sys/devices/system/cpu/possible// 获取CPU的频率cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/11/images/方法调用.png">
+<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/11/images/flame_chart.png">
+<meta property="og:updated_time" content="2018-12-11T11:58:54.646Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="坚持远方">
-<meta name="twitter:description" content="时人莫小池中水，浅处无妨有卧龙。">
+<meta name="twitter:title" content="Android卡顿优化">
+<meta name="twitter:description" content="CPU 时间 用户时间：执行用户态应用程序代码所消耗的时间 系统时间：执行内核态系统调用所消耗的时间，包括 I/O、锁、中断以及其他系统调用的时间。  获取设备的 CPU 信息 12345// 获取CPU核心数cat /sys/devices/system/cpu/possible// 获取CPU的频率cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo">
+<meta name="twitter:image" content="https://zhanfangzxc.github.io/2018/12/11/images/方法调用.png">
   
     <link rel="alternative" href="/atom.xml" title="坚持远方" type="application/atom+xml">
   
@@ -166,60 +170,252 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Android卡顿优化" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/15/Android-Studio常用命令/" class="archive-article-date">
-  	<time datetime="2018-11-15T08:30:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-15</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/15/Android-Studio常用命令/">Android Studio常用命令</a>
+    <h1 class="article-title" itemprop="name">
+      Android卡顿优化
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/12/11/Android卡顿优化/" class="archive-article-date">
+  	<time datetime="2018-12-11T10:28:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="CPU-时间"><a href="#CPU-时间" class="headerlink" title="CPU 时间"></a>CPU 时间</h3><ol>
+<li>用户时间：执行用户态应用程序代码所消耗的时间</li>
+<li>系统时间：执行内核态系统调用所消耗的时间，包括 I/O、锁、中断以及其他系统调用的时间。</li>
+</ol>
+<p><strong>获取设备的 CPU 信息</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 获取CPU核心数</span><br><span class="line">cat /sys/devices/system/cpu/possible</span><br><span class="line"></span><br><span class="line">// 获取CPU的频率</span><br><span class="line">cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq</span><br></pre></td></tr></table></figure>
+<h4 id="卡顿问题分析指标"><a href="#卡顿问题分析指标" class="headerlink" title="卡顿问题分析指标"></a>卡顿问题分析指标</h4><ol>
+<li>查看 CPU 的使用率<ol>
+<li>通过/proc/stat 得到整个系统 CPU 的使用情况</li>
+<li>通过/proc/[pid]/stat 得到某个进程的 CPU 使用情况</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">proc/self/stat:</span><br><span class="line">  utime:       用户时间，反应用户代码执行的耗时</span><br><span class="line">  stime:       系统时间，反应系统调用执行的耗时</span><br><span class="line">  majorFaults：需要硬盘拷贝的缺页次数</span><br><span class="line">  minorFaults：无需硬盘拷贝的缺页次数</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>CPU 饱和度：反映的事线程排队等待 CPU 的情况，也就是 CPU 的负载情况<ol>
+<li>启动的线程过多导致不断切换执行的线程，每次切换都需要刷新寄存器和计数器</li>
+<li>通过/proc/[pid]/schedstat 文件来查看 CPU 上下文切换次数</li>
+<li>可以通过 uptime 命令检查 CPU 在一分钟，五分钟和 15 分钟内的平均负载。</li>
+<li>另一个影响 CPU 饱和度的事线程优先级，线程优先级会影响 Android 系统的调度策略。nice 和 cgroup 值共同决定，nice 值越低，抢占 CPU 时间片的能力越强。</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>是否存在高优先级的线程空等待低优先级线程，例如主线程等待某个后台线程的锁。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">proc/self/sched:</span><br><span class="line">  nr_voluntary_switches：</span><br><span class="line">  主动上下文切换次数，因为线程无法获取所需资源导致上下文切换，最普遍的是 IO。</span><br><span class="line">  nr_involuntary_switches：</span><br><span class="line">  被动上下文切换次数，线程被系统强制调度导致上下文切换，例如大量线程在抢占 CPU。</span><br><span class="line">  se.statistics.iowait_count：IO 等待的次数</span><br><span class="line">  se.statistics.iowait_sum：  IO 等待的时间</span><br></pre></td></tr></table></figure>
+<p><strong>常用命令</strong></p>
+<ol>
+<li>top 查看哪个进程是 CPU 的消耗大户</li>
+<li>vmstat 实时动态监视操作系统的虚拟内存和 CPU 活动</li>
+<li>strace 跟踪某个进程中所有系统调用</li>
+</ol>
+<h3 id="Android-卡顿排查工具"><a href="#Android-卡顿排查工具" class="headerlink" title="Android 卡顿排查工具"></a>Android 卡顿排查工具</h3><p><strong>两个流派</strong></p>
+<ol>
+<li>instrument。获取一段时间内所有函数的调用过程，分析一段时间内函数的调用流程。</li>
+<li>sample 抽样的方式观察某些函数的调用过程。</li>
+</ol>
+<p><strong>工具介绍</strong></p>
+<ol>
+<li>Traceview</li>
+<li>Nanoscope 修改 Android 虚拟机源码，在 ArtMethod 执行入口和结束位置增加埋点代码，将所有的信息先写到内存，等到 trace 结束，统一生成结果文件。</li>
+<li>systrace 跟踪系统的 I/O 操作、CPU 负载、Surface 渲染、GC 等事件。</li>
+</ol>
+<blockquote>
+<p>在 systrace 上面自动增加应用程序的耗时分析？<br>在重要的函数的入口和出口分别增加 Trace.beginSection 和 Trace.endSection</p>
+</blockquote>
+<ol start="4">
+<li>Simpleperf Android5.0 可以看到所有的 Native 代码的耗时。</li>
+</ol>
+<p>Simplepref 支持 java 代码的性能分析，分为如下几个阶段：</p>
+<ol>
+<li>在 Android M 和以前，simplepref 不支持代码分析</li>
+<li>在 Android O 和以前，需要手动指定编译 OAT 文件</li>
+<li>在 Android P 和以后，无需做任何事情，SimplePref 就可以支持 Java 代码分析。</li>
+</ol>
+<blockquote>
+<ol>
+<li>如果需要分析 Native 代码的耗时，可以选择 Simplepref</li>
+<li>如果想分析系统调用，可以选择 systrace</li>
+<li>如果想分析整个程序执行流程的耗时，可以选择 Traceview 或者插桩版本的 systrace。</li>
+</ol>
+</blockquote>
+<h3 id="Android-3-2-的-profiler-集成的性能分析工具"><a href="#Android-3-2-的-profiler-集成的性能分析工具" class="headerlink" title="Android 3.2 的 profiler 集成的性能分析工具"></a>Android 3.2 的 profiler 集成的性能分析工具</h3><ol>
+<li>Sample JavaMethods 的功能类似于 TraceView 的 sample 类型</li>
+<li>Trace Java Methods 的功能类似于 Traceview 的 instrument 类型</li>
+<li>Trace System Calls 的功能类似于 systrace</li>
+<li>SampleNative 的功能类似于 Simplepref。</li>
+</ol>
+<h3 id="展示方式"><a href="#展示方式" class="headerlink" title="展示方式"></a>展示方式</h3><ol>
+<li><p>Call Chart：是 TraceView 和 systrace 默认使用的展示方式，按照应用程序的函数执行顺序来展示，适合用于分析整个流程的调用。</p>
+<p><img src="../images/方法调用.png" alt="方法调用"></p>
+</li>
+<li><p>Flame Chart</p>
+<p><img src="../images/flame_chart.png" alt="flame_chart"></p>
+</li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 优化</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://zhanfangzxc.github.io/2018/12/11/Android卡顿优化/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/12/12/java核心技术之Vector-ArrayList-LinkedList对比/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          java核心技术之Vector ArrayList LinkedList对比
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2018/12/07/深入理解java虚拟机之六/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">深入理解java虚拟机之六</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -242,9 +438,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

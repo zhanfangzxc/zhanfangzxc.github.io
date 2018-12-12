@@ -168,6 +168,554 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java核心技术之Vector-ArrayList-LinkedList对比" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/12/java核心技术之Vector-ArrayList-LinkedList对比/">java核心技术之Vector ArrayList LinkedList对比</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/12/java核心技术之Vector-ArrayList-LinkedList对比/" class="archive-article-date">
+  	<time datetime="2018-12-12T03:24:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Vector</strong></p>
+<ol>
+<li>线程安全的动态数组，不建议选择，同步有额外开销</li>
+<li>内部使用对象数组来保存数据，可以根据需要自动增加容量</li>
+<li>数组已满时，会创建新的数组，并拷贝原来的数组数据</li>
+<li>默认创建一个大小为10的Object数组，并将capacityIncrement设置为0；当插入元素数组大小不够时，如果capacityIncrement大于0，则将Object数组的大小扩充为现有size+capacityIncrement, 如果capacityIncrement&lt;=0,则将Object数组的大小扩为现有大小的2倍。</li>
+</ol>
+<p><strong>ArrayList</strong></p>
+<ol>
+<li>动态数组</li>
+<li>不是线程安全的</li>
+<li>可以根据需要增加容量</li>
+<li>扩容时会提高50%,扩容过程需要调用底层System.arraycopy()方法进行大量的数组复制操作，删除时不会减少数组容量，可以调用trimToSize()方法，查找元素时需要遍历数组，对于非null元素采用equals方式查找。</li>
+<li>插入删除速度慢，检索速度快</li>
+</ol>
+<p><strong>LinkedList</strong></p>
+<ol>
+<li>双向链表</li>
+<li>不需要调整容量</li>
+<li>不是线程安全的</li>
+<li>插入元素时，需创建一个Entry对象，并更新该元素的前后元素的引用，查找元素时，需要遍历链表；删除元素，需要遍历链表，找到要删除的元素</li>
+<li>增加删除速度快，检索速度慢</li>
+</ol>
+<h3 id="三者适合场景"><a href="#三者适合场景" class="headerlink" title="三者适合场景"></a>三者适合场景</h3><ol>
+<li>Vector和ArrayList适合随机访问，除了尾部插入和删除元素，其余操作性能相对较差</li>
+<li>LinkedList进行节点插入、删除，所以性能高效，但是随机访问要比上面两个慢</li>
+</ol>
+<h3 id="需要掌握的排序算法"><a href="#需要掌握的排序算法" class="headerlink" title="需要掌握的排序算法"></a>需要掌握的排序算法</h3><ol>
+<li>内部排序：归并排序、交换排序(冒泡，快排)、选择排序、插入排序等。</li>
+<li>外部排序：掌握利用内存和外部存储处理超大数据集</li>
+</ol>
+<p><img src="../images/list.png" alt="list"></p>
+<ol>
+<li>List</li>
+<li>Set: 不允许插入重复元素<ol>
+<li>TreeSet 支持自然顺序访问，添加、删除、包含等操作相对低效</li>
+<li>HashSet 利用哈希算法 常数时间的添加、删除、包含等操作，但是不保证有序，初始化时，不要把容量设置过大</li>
+<li>LinkedHashSet 内部构建了一个记录插入顺序的双向链表，性能略低于HashSet。</li>
+</ol>
+</li>
+<li>Queue/Deque</li>
+</ol>
+<h3 id="java默认提供的排序算法"><a href="#java默认提供的排序算法" class="headerlink" title="java默认提供的排序算法"></a>java默认提供的排序算法</h3><ol>
+<li>对于原始数据类型，目前使用的是双轴快速排序，是一种改进的快速排序算法，<a href="http://hg.openjdk.java.net/jdk/jdk/file/26ac622a4cab/src/java.base/share/classes/java/util/DualPivotQuicksort.java" target="_blank" rel="noopener">源码地址</a></li>
+<li>对于对象数据类型，目前使用的是<a href="http://hg.openjdk.java.net/jdk/jdk/file/26ac622a4cab/src/java.base/share/classes/java/util/TimSort.java" target="_blank" rel="noopener">TimSort</a>,思想上是一种归并和二分插入排序结合的优化排序算法，思路是查找数据集中已经排好序的分区，然后合并这些分区来达到排序的目的。</li>
+</ol>
+<blockquote>
+<p>Collections提供了一系列的synchronized方法</p>
+<p>List list = Collections.synchronizedList(new ArrayList());</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">java 集合 list</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/12/java核心技术之Vector-ArrayList-LinkedList对比/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Android卡顿优化" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/11/Android卡顿优化/">Android卡顿优化</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/11/Android卡顿优化/" class="archive-article-date">
+  	<time datetime="2018-12-11T10:28:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="CPU-时间"><a href="#CPU-时间" class="headerlink" title="CPU 时间"></a>CPU 时间</h3><ol>
+<li>用户时间：执行用户态应用程序代码所消耗的时间</li>
+<li>系统时间：执行内核态系统调用所消耗的时间，包括 I/O、锁、中断以及其他系统调用的时间。</li>
+</ol>
+<p><strong>获取设备的 CPU 信息</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 获取CPU核心数</span><br><span class="line">cat /sys/devices/system/cpu/possible</span><br><span class="line"></span><br><span class="line">// 获取CPU的频率</span><br><span class="line">cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq</span><br></pre></td></tr></table></figure>
+<h4 id="卡顿问题分析指标"><a href="#卡顿问题分析指标" class="headerlink" title="卡顿问题分析指标"></a>卡顿问题分析指标</h4><ol>
+<li>查看 CPU 的使用率<ol>
+<li>通过/proc/stat 得到整个系统 CPU 的使用情况</li>
+<li>通过/proc/[pid]/stat 得到某个进程的 CPU 使用情况</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">proc/self/stat:</span><br><span class="line">  utime:       用户时间，反应用户代码执行的耗时</span><br><span class="line">  stime:       系统时间，反应系统调用执行的耗时</span><br><span class="line">  majorFaults：需要硬盘拷贝的缺页次数</span><br><span class="line">  minorFaults：无需硬盘拷贝的缺页次数</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>CPU 饱和度：反映的事线程排队等待 CPU 的情况，也就是 CPU 的负载情况<ol>
+<li>启动的线程过多导致不断切换执行的线程，每次切换都需要刷新寄存器和计数器</li>
+<li>通过/proc/[pid]/schedstat 文件来查看 CPU 上下文切换次数</li>
+<li>可以通过 uptime 命令检查 CPU 在一分钟，五分钟和 15 分钟内的平均负载。</li>
+<li>另一个影响 CPU 饱和度的事线程优先级，线程优先级会影响 Android 系统的调度策略。nice 和 cgroup 值共同决定，nice 值越低，抢占 CPU 时间片的能力越强。</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>是否存在高优先级的线程空等待低优先级线程，例如主线程等待某个后台线程的锁。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">proc/self/sched:</span><br><span class="line">  nr_voluntary_switches：</span><br><span class="line">  主动上下文切换次数，因为线程无法获取所需资源导致上下文切换，最普遍的是 IO。</span><br><span class="line">  nr_involuntary_switches：</span><br><span class="line">  被动上下文切换次数，线程被系统强制调度导致上下文切换，例如大量线程在抢占 CPU。</span><br><span class="line">  se.statistics.iowait_count：IO 等待的次数</span><br><span class="line">  se.statistics.iowait_sum：  IO 等待的时间</span><br></pre></td></tr></table></figure>
+<p><strong>常用命令</strong></p>
+<ol>
+<li>top 查看哪个进程是 CPU 的消耗大户</li>
+<li>vmstat 实时动态监视操作系统的虚拟内存和 CPU 活动</li>
+<li>strace 跟踪某个进程中所有系统调用</li>
+</ol>
+<h3 id="Android-卡顿排查工具"><a href="#Android-卡顿排查工具" class="headerlink" title="Android 卡顿排查工具"></a>Android 卡顿排查工具</h3><p><strong>两个流派</strong></p>
+<ol>
+<li>instrument。获取一段时间内所有函数的调用过程，分析一段时间内函数的调用流程。</li>
+<li>sample 抽样的方式观察某些函数的调用过程。</li>
+</ol>
+<p><strong>工具介绍</strong></p>
+<ol>
+<li>Traceview</li>
+<li>Nanoscope 修改 Android 虚拟机源码，在 ArtMethod 执行入口和结束位置增加埋点代码，将所有的信息先写到内存，等到 trace 结束，统一生成结果文件。</li>
+<li>systrace 跟踪系统的 I/O 操作、CPU 负载、Surface 渲染、GC 等事件。</li>
+</ol>
+<blockquote>
+<p>在 systrace 上面自动增加应用程序的耗时分析？<br>在重要的函数的入口和出口分别增加 Trace.beginSection 和 Trace.endSection</p>
+</blockquote>
+<ol start="4">
+<li>Simpleperf Android5.0 可以看到所有的 Native 代码的耗时。</li>
+</ol>
+<p>Simplepref 支持 java 代码的性能分析，分为如下几个阶段：</p>
+<ol>
+<li>在 Android M 和以前，simplepref 不支持代码分析</li>
+<li>在 Android O 和以前，需要手动指定编译 OAT 文件</li>
+<li>在 Android P 和以后，无需做任何事情，SimplePref 就可以支持 Java 代码分析。</li>
+</ol>
+<blockquote>
+<ol>
+<li>如果需要分析 Native 代码的耗时，可以选择 Simplepref</li>
+<li>如果想分析系统调用，可以选择 systrace</li>
+<li>如果想分析整个程序执行流程的耗时，可以选择 Traceview 或者插桩版本的 systrace。</li>
+</ol>
+</blockquote>
+<h3 id="Android-3-2-的-profiler-集成的性能分析工具"><a href="#Android-3-2-的-profiler-集成的性能分析工具" class="headerlink" title="Android 3.2 的 profiler 集成的性能分析工具"></a>Android 3.2 的 profiler 集成的性能分析工具</h3><ol>
+<li>Sample JavaMethods 的功能类似于 TraceView 的 sample 类型</li>
+<li>Trace Java Methods 的功能类似于 Traceview 的 instrument 类型</li>
+<li>Trace System Calls 的功能类似于 systrace</li>
+<li>SampleNative 的功能类似于 Simplepref。</li>
+</ol>
+<h3 id="展示方式"><a href="#展示方式" class="headerlink" title="展示方式"></a>展示方式</h3><ol>
+<li><p>Call Chart：是 TraceView 和 systrace 默认使用的展示方式，按照应用程序的函数执行顺序来展示，适合用于分析整个流程的调用。</p>
+<p><img src="../images/方法调用.png" alt="方法调用"></p>
+</li>
+<li><p>Flame Chart</p>
+<p><img src="../images/flame_chart.png" alt="flame_chart"></p>
+</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 优化</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/11/Android卡顿优化/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-深入理解java虚拟机之六" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/07/深入理解java虚拟机之六/">深入理解java虚拟机之六</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/07/深入理解java虚拟机之六/" class="archive-article-date">
+  	<time datetime="2018-12-07T07:56:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="类文件结构"><a href="#类文件结构" class="headerlink" title="类文件结构"></a>类文件结构</h3><p>Class 文件格式采用一种类似于 C 语言结构体的伪结构来存储数据，这种伪结构有两种数据类型：无符号数和表。</p>
+<ol>
+<li>无符号数 属于基本的数据类型，以 u1，u2，u4，u8 来分别表示 1 个字节，2 个字节，4 个字节和 8 个字节的无符号数，可以用来描述数字，索引引用，数量值或者按照 UTF-8 编码构成的字符串值</li>
+<li>表 由多个无符号数或者其他表作为数据项构成的复合数据类型，所以表都习惯性的以”_info”结尾。用于描述有层次关系的复合结构的数据，整个 class 文件本质上就是一张表。</li>
+</ol>
+<p><img src="../images/classfile.png" alt="类文件结构"></p>
+<ol>
+<li>magic 魔数 用来确定这个文件是否能被虚拟机所能接收的 class 文件，魔数固定为 0xCAFEBABE，不会改变。</li>
+<li>minor_version(副版本号) major_version(主版本号)</li>
+<li>constant_pool_count 常量池计数器 值等于常量池表中的成员数加 1</li>
+<li>constant_pool[] 常量池，是一种表结构，包含 class 文件结构及其子结构中引用的所有字符串常量、类或者接口名、字段名和其他常量。<blockquote>
+<ol>
+<li>主要存放字面量和符号引用</li>
+<li>符号引用包括下面三类常量:<ol>
+<li>类和接口的全限定名</li>
+<li>字段的名称和描述符</li>
+<li>方法的名称和描述符</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>Class 文件中方法、字段都需要引用 CONSTANT_Utf8_info 型常量，所以 CONSTANT_Utf8_info 型常量的最大长度也就是 java 中方法和字段的最大长度。即 u2 类型的最大长度 65535.</p>
+</blockquote>
+<ol start="5">
+<li>access_flags 访问标志 是一种由标志组成的掩码，用于表示某各类或者接口的访问权限以及属性。</li>
+</ol>
+<p><img src="../images/access_flags.png" alt="访问标志"></p>
+<pre><code>1. 带有ACC_INTERFACE标志的class文件表示是接口而不是类，反之则表示是类而不是接口
+2. 如果一个类被这只了ACC_INTERFACE，那么同时也得设置ACC_ABSTRACT,同时不能再设置ACC_FINAL、ACC_SUPER或ACC_ENUM标志。
+3. 如果没有设置ACC_INTERFACE标志，这个class文件可以具有除ACC_ANNOTATION之外的其他所有标志，ACC_FINAL和ACC_ABSTRACT这类互斥的标志除外
+4. ACC_SYNTHETIC标志意味着该类或接口是由编译器生成的，而不是由源代码生成的。
+5. ACC_ENUM 标志表明该类或其父类为枚举类型。
+</code></pre><ol start="6">
+<li>this_class 值必须是对常量池表中某项的一个有效索引值，常量池在这个索引处的成员必须为 CONSTANT_CLASS_INFO 类型的结构体，该结构体表示这个 class 文件所定义的类或接口。</li>
+<li>super_class 父类索引 ，对于类来说，super_class 的值要么是 0，要么是对常量池中某项的一个有效的索引值，如果不为 0，那么常量池在这个索引处的成员必须是 CONSTANT_CLASS_INFO 类型常量，他表示这个 class 文件所定义的类的直接超类，在当前的直接超类，以及他所有间接超类的 classfile 结构体中，access_flags 里面均不能带有 ACC_FINAL 标志。</li>
+<li>interface_count 接口计数器，用来表示当前类或者接口的直接超接口数量。</li>
+<li>interfaces[] 接口表</li>
+<li>fields_count 字段计数器 表示 class 文件 fields 表的成员个数</li>
+<li>fields[] 字段表 每个成员都必须是一个 fields_info 结构的数据项，用于表示当前类或接口中某个字段的完整描述，不包括从父类或父接口继承的那些字段。</li>
+<li>methods_count 方法计数器 表示当前 class 文件 methods 的成员个数，每个成员都是一个 method_info 结构</li>
+<li>methods[] 方法表 只包含当前类或接口中的方法，不包括从父类或父接口继承的方法。</li>
+<li>attributes_count 属性计数器 表示当前 class 文件属性表的成员个数，</li>
+<li>attributes[] 属性表 每个项的值都是 attribute_info 结构。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">虚拟机</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/07/深入理解java虚拟机之六/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ReactNative开发总结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/03/ReactNative开发总结/">ReactNative开发总结</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/03/ReactNative开发总结/" class="archive-article-date">
+  	<time datetime="2018-12-03T09:39:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><a href="https://cloud.tencent.com/developer/article/1038718" target="_blank" rel="noopener">ReactNative 调用原生 UI 组件</a></li>
+<li><a href="https://juejin.im/post/5a0c51d3f265da431e164df9" target="_blank" rel="noopener">ReactNative 权限申请</a></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">android ReactNative</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/03/ReactNative开发总结/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ConstraintLayout总结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/03/ConstraintLayout总结/">ConstraintLayout总结</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/03/ConstraintLayout总结/" class="archive-article-date">
+  	<time datetime="2018-12-03T02:48:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><a href="https://developer.android.com/training/constraint-layout/" target="_blank" rel="noopener">Build a Responsive UI with ConstraintLayout</a></li>
+<li><a href="https://riggaroo.co.za/constraintlayout-constraintlayoutstates/" target="_blank" rel="noopener">ConstraintLayoutStates</a></li>
+<li><a href="">ConstraintLayout性能分析</a></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Android ConstraintLayout</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/03/ConstraintLayout总结/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-算法-前缀匹配" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -782,307 +1330,10 @@
 
 
   
-    <article id="post-Android-Studio常用命令" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/15/Android-Studio常用命令/">Android Studio常用命令</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/15/Android-Studio常用命令/" class="archive-article-date">
-  	<time datetime="2018-11-15T08:30:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>查看项目依赖关系</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gradlew -q app:dependencies --configuration debugCompileClasspath</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/15/Android-Studio常用命令/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-翻译-使用Architecture-Components常见的五个错误" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/13/翻译-使用Architecture-Components常见的五个错误/">[翻译]使用Architecture Components常见的五个错误</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/13/翻译-使用Architecture-Components常见的五个错误/" class="archive-article-date">
-  	<time datetime="2018-11-13T09:33:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>原文地址:<a href="https://proandroiddev.com/5-common-mistakes-when-using-architecture-components-403e9899f4cb" target="_blank" rel="noopener">5 common mistakes when using Architecture Components</a></p>
-<p>文章包含以下内容:</p>
-<ul>
-<li>Fragments 中 LiveData Observers 泄漏</li>
-<li>每次屏幕旋转都会重新加载数据</li>
-<li>ViewModels 泄漏</li>
-<li>将 LiveData 公开为可视的视图</li>
-<li>每次配置更改之后创建 ViewModels 依赖</li>
-</ul>
-<h3 id="Fragments-中-LiveData-Observers-泄漏"><a href="#Fragments-中-LiveData-Observers-泄漏" class="headerlink" title="Fragments 中 LiveData Observers 泄漏"></a>Fragments 中 LiveData Observers 泄漏</h3><p>Fragments 的生命周期是比较棘手的，一个 fragment 从 detached 到 attached 的过程中并不总会调用 onDestroy 方法,例如，当配置更改时,fragments 就不会被销毁，当配置更改时，只有 fragments 中的 views 会被销毁，而 fragment 会继续存活,所以 DESTROYED 状态就走不到。</p>
-<p>这意味着，我们在 onCreateView 或 onActivityCreated 中开始观察 LiveData 时，就会将 fragment 作为 LifecycleOwner:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class BooksFragment: Fragment() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> lateinit <span class="keyword">var</span> viewModel: BooksViewModel</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onCreateView</span><span class="params">(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)</span>: View? </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> inflater.inflate(R.layout.fragment_books, container)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onActivityCreated</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onActivityCreated(savedInstanceState)</span><br><span class="line">        viewModel = ViewModelProviders.of(<span class="keyword">this</span>).get(BooksViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">        <span class="title">viewModel</span>.<span class="title">liveData</span>.<span class="title">observe</span>(<span class="title">this</span>, <span class="title">Observer</span> </span>&#123; updateViews(it) &#125;)  <span class="comment">// Risky: Passing Fragment as LifecycleOwner</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>每次 fragment 重新 attached 时会创建一个新的 Observer 实例，但是之前的 Observer 并没有移除，因为 LifecycleOwner 没有走到<strong>DESTROYED</strong>状态，这会导致越来越多的相同观察者同时处于活动状态，并且 onChanged 中的代码被多次执行。</p>
-<p>这个问题可以在<a href="https://medium.com/@BladeCoder/architecture-components-pitfalls-part-1-9300dd969808" target="_blank" rel="noopener">这里</a>找到更多的解释</p>
-<p>最终解决方案就是使用 fragments 中 view 的生命周期来代替 fragments 的生命周期，<strong>getViewLifeCycleOwner()</strong>和<strong>getViewLifeCycleOwnerLiveData()</strong>在 support library 28.0.0 和 AndroidX 1.0.0 中被提供,这样每次 fragment 中 views 被销毁的时候，LiveData 都会移除掉 observers。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class BooksFragment : Fragment() &#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onActivityCreated</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onActivityCreated(savedInstanceState)</span><br><span class="line">        viewModel = ViewModelProviders.of(<span class="keyword">this</span>).get(BooksViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">        <span class="title">viewModel</span>.<span class="title">liveData</span>.<span class="title">observe</span>(<span class="title">viewLifecycleOwner</span>, <span class="title">Observer</span> </span>&#123; updateViews(it) &#125;)    <span class="comment">// Usually what we want: Passing Fragment's view as LifecycleOwner</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="每次屏幕旋转都重新加载数据"><a href="#每次屏幕旋转都重新加载数据" class="headerlink" title="每次屏幕旋转都重新加载数据"></a>每次屏幕旋转都重新加载数据</h3><p>通常情况下初始化和设置逻辑我们都会放在 Activity 中的 onCreate()方法中，通常我们也会在 onCreate 中触发加载数据的逻辑，但是会产生的问题就是当屏幕旋转的时候会重新加载数据</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductViewModel</span>(</span></span><br><span class="line">    private val repository: ProductRepository</span><br><span class="line">) : ViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> val productDetails = MutableLiveData&lt;Resource&lt;ProductDetails&gt;&gt;()</span><br><span class="line">    <span class="keyword">private</span> val specialOffers = MutableLiveData&lt;Resource&lt;SpecialOffers&gt;&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">getProductsDetails</span><span class="params">()</span>: LiveData&lt;Resource&lt;ProductDetails&gt;&gt; </span>&#123;</span><br><span class="line">        repository.getProductDetails()  <span class="comment">// Loading ProductDetails from network/database</span></span><br><span class="line">        ...                             <span class="comment">// Getting ProductDetails from repository and updating productDetails LiveData</span></span><br><span class="line">        <span class="keyword">return</span> productDetails</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">loadSpecialOffers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        repository.getSpecialOffers()   <span class="comment">// Loading SpecialOffers from network/database</span></span><br><span class="line">        ...                             <span class="comment">// Getting SpecialOffers from repository and updating specialOffers LiveData</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ProductActivity : AppCompatActivity() &#123;</span><br><span class="line"></span><br><span class="line">    lateinit <span class="keyword">var</span> productViewModelFactory: ProductViewModelFactory</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onCreate</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        val viewModel = ViewModelProviders.of(<span class="keyword">this</span>, productViewModelFactory).get(ProductViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">        <span class="title">viewModel</span>.<span class="title">getProductsDetails</span>().<span class="title">observe</span>(<span class="title">this</span>, <span class="title">Observer</span> </span>&#123; <span class="comment">/*...*/</span> &#125;)  <span class="comment">// (probable) Reloading product details after every rotation</span></span><br><span class="line">        viewModel.loadSpecialOffers()                                       <span class="comment">// (probable) Reloading special offers after every rotation</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>解决方案：</p>
-<ol>
-<li>使用 AbsentLiveData，只有在数据没有被设置的时候才去加载</li>
-<li>在真正需要的时候才开始加载数据，比如在 OnClickListener 中</li>
-<li>在 ViewModels 的构造函数中加载并暴露 getters。</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductViewModel</span>(</span></span><br><span class="line">    private val repository: ProductRepository</span><br><span class="line">) : ViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> val productDetails = MutableLiveData&lt;Resource&lt;ProductDetails&gt;&gt;()</span><br><span class="line">    <span class="keyword">private</span> val specialOffers = MutableLiveData&lt;Resource&lt;SpecialOffers&gt;&gt;()</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        loadProductsDetails()           <span class="comment">// ViewModel is created only once during Activity/Fragment lifetime</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> fun <span class="title">loadProductsDetails</span><span class="params">()</span> </span>&#123; <span class="comment">// private, just utility method to be invoked in constructor</span></span><br><span class="line">        repository.getProductDetails()  <span class="comment">// Loading ProductDetails from network/database</span></span><br><span class="line">        ...                             <span class="comment">// Getting ProductDetails from repository and updating productDetails LiveData</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">loadSpecialOffers</span><span class="params">()</span> </span>&#123;           <span class="comment">// public, intended to be invoked by other classes when needed</span></span><br><span class="line">        repository.getSpecialOffers()   <span class="comment">// Loading SpecialOffers from network/database</span></span><br><span class="line">        ...                             <span class="comment">// Getting SpecialOffers from repository and updating _specialOffers LiveData</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">getProductDetails</span><span class="params">()</span>: LiveData&lt;Resource&lt;ProductDetails&gt;&gt; </span>&#123;   <span class="comment">// Simple getter</span></span><br><span class="line">        <span class="keyword">return</span> productDetails</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">getSpecialOffers</span><span class="params">()</span>: LiveData&lt;Resource&lt;SpecialOffers&gt;&gt; </span>&#123;     <span class="comment">// Simple getter</span></span><br><span class="line">        <span class="keyword">return</span> specialOffers</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ProductActivity : AppCompatActivity() &#123;</span><br><span class="line"></span><br><span class="line">    lateinit <span class="keyword">var</span> productViewModelFactory: ProductViewModelFactory</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onCreate</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        val viewModel = ViewModelProviders.of(<span class="keyword">this</span>, productViewModelFactory).get(ProductViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">        <span class="title">viewModel</span>.<span class="title">getProductDetails</span>().<span class="title">observe</span>(<span class="title">this</span>, <span class="title">Observer</span> </span>&#123; <span class="comment">/*...*/</span> &#125;)    <span class="comment">// Just setting observer</span></span><br><span class="line">        viewModel.getSpecialOffers().observe(<span class="keyword">this</span>, Observer &#123; <span class="comment">/*...*/</span> &#125;)     <span class="comment">// Just setting observer</span></span><br><span class="line"></span><br><span class="line">        button_offers.setOnClickListener &#123; viewModel.loadSpecialOffers() &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="泄漏-ViewModels"><a href="#泄漏-ViewModels" class="headerlink" title=" 泄漏 ViewModels"></a> 泄漏 ViewModels</h3><p>我们不应该将 View 的引用传递给 ViewModel，但是我们也应该谨慎的将对 ViewModels 的引用传递给其他类，当 Activity 已经 finished，ViewModel 也应该进行垃圾回收。</p>
-<p>示例中是传递一个监听器到 Repository，他是 Singleton 范围的，并且之后不会清楚监听器。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LocationRepository</span>() </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> listener: ((Location) -&gt; Unit)? = <span class="keyword">null</span></span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">setOnLocationChangedListener</span><span class="params">(listener: (Location)</span> -&gt; Unit) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.listener = listener</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> fun <span class="title">onLocationUpdated</span><span class="params">(location: Location)</span> </span>&#123;</span><br><span class="line">        listener?.invoke(location)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MapViewModel: AutoClearViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> val liveData = MutableLiveData&lt;LocationRepository.Location&gt;()</span><br><span class="line">    <span class="keyword">private</span> val repository = LocationRepository()</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        repository.setOnLocationChangedListener &#123;   <span class="comment">// Risky: Passing listener (which holds reference to the MapViewModel)</span></span><br><span class="line">            liveData.value = it                     <span class="comment">// to singleton scoped LocationRepository</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>解决方法就是在<strong>onCleared()</strong>方法中移除掉监听器，在 Repository 中将 listener 存储为 <strong>WeakReference</strong>，使用 LiveData 在 Repository 和 ViewModel 之间进行通信。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LocationRepository</span>() </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> listener: ((Location) -&gt; Unit)? = <span class="keyword">null</span></span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">setOnLocationChangedListener</span><span class="params">(listener: (Location)</span> -&gt; Unit) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.listener = listener</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">removeOnLocationChangedListener</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.listener = <span class="keyword">null</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> fun <span class="title">onLocationUpdated</span><span class="params">(location: Location)</span> </span>&#123;</span><br><span class="line">        listener?.invoke(location)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MapViewModel: AutoClearViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> val liveData = MutableLiveData&lt;LocationRepository.Location&gt;()</span><br><span class="line">    <span class="keyword">private</span> val repository = LocationRepository()</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        repository.setOnLocationChangedListener &#123;   <span class="comment">// Risky: Passing listener (which holds reference to the MapViewModel)</span></span><br><span class="line">            liveData.value = it                     <span class="comment">// to singleton scoped LocationRepository</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override <span class="title">onCleared</span><span class="params">()</span> </span>&#123;                            <span class="comment">// GOOD: Listener instance from above and MapViewModel</span></span><br><span class="line">        repository.removeOnLocationChangedListener()  <span class="comment">//       can now be garbage collected</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="将-LiveData-公开为可视的视图"><a href="#将-LiveData-公开为可视的视图" class="headerlink" title="将 LiveData 公开为可视的视图"></a>将 LiveData 公开为可视的视图</h3><p>视图应该只观察 LiveData，yincident 我们应该封装对 MutableLiveData 的访问。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class CatalogueViewModel : ViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// BAD: Exposing mutable LiveData</span></span><br><span class="line">    val products = MutableLiveData&lt;Products&gt;()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// GOOD: Encapsulate access to mutable LiveData through getter</span></span><br><span class="line">    <span class="keyword">private</span> val promotions = MutableLiveData&lt;Promotions&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">getPromotions</span><span class="params">()</span>: LiveData&lt;Promotions&gt; </span>= promotions</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// GOOD: Encapsulate access to mutable LiveData using backing property</span></span><br><span class="line">    <span class="keyword">private</span> val _offers = MutableLiveData&lt;Offers&gt;()</span><br><span class="line">    val offers: LiveData&lt;Offers&gt; = _offers</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function">fun <span class="title">loadData</span><span class="params">()</span></span>&#123;</span><br><span class="line">        products.value = loadProducts()     <span class="comment">// Other classes can also set products value</span></span><br><span class="line">        promotions.value = loadPromotions() <span class="comment">// Only CatalogueViewModel can set promotions value</span></span><br><span class="line">        _offers.value = loadOffers()        <span class="comment">// Only CatalogueViewModel can set offers value</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="每次配置更改之后创建-ViewModel-依赖"><a href="#每次配置更改之后创建-ViewModel-依赖" class="headerlink" title="每次配置更改之后创建 ViewModel 依赖"></a>每次配置更改之后创建 ViewModel 依赖</h3><p>ViewModel 可以在配置更改之类的操作中存活，所以每次配置更改时创建它的依赖关系是多余的，比如下面的代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoviesViewModel</span>(</span></span><br><span class="line">    private val repository: MoviesRepository,</span><br><span class="line">    <span class="keyword">private</span> val stringProvider: StringProvider,</span><br><span class="line">    <span class="keyword">private</span> val authorisationService: AuthorisationService</span><br><span class="line">) : ViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoviesViewModelFactory</span>(   // <span class="title">We</span> <span class="title">need</span> <span class="title">to</span> <span class="title">create</span> <span class="title">instances</span> <span class="title">of</span> <span class="title">below</span> <span class="title">dependencies</span> <span class="title">to</span> <span class="title">create</span> <span class="title">instance</span> <span class="title">of</span> <span class="title">MoviesViewModelFactory</span></span></span><br><span class="line">    private val repository: MoviesRepository,</span><br><span class="line">    <span class="keyword">private</span> val stringProvider: StringProvider,</span><br><span class="line">    <span class="keyword">private</span> val authorisationService: AuthorisationService</span><br><span class="line">) : ViewModelProvider.Factory &#123;</span><br><span class="line"></span><br><span class="line">    override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T &#123;  <span class="comment">// but this method is called by ViewModelProvider only if ViewModel wasn't already created</span></span><br><span class="line">        <span class="keyword">return</span> MoviesViewModel(repository, stringProvider, authorisationService) as T</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MoviesActivity : AppCompatActivity() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    lateinit <span class="keyword">var</span> viewModelFactory: MoviesViewModelFactory</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> lateinit <span class="keyword">var</span> viewModel: MoviesViewModel</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onCreate</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;    <span class="comment">// Called each time Activity is recreated</span></span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_movies)</span><br><span class="line">        injectDependencies() <span class="comment">// Creating new instance of MoviesViewModelFactory</span></span><br><span class="line">        viewModel = ViewModelProviders.of(<span class="keyword">this</span>, viewModelFactory).get(MoviesViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class">    &#125;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">    ...</span></span><br><span class="line"><span class="class">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>每次配置更改时都需要创建一个新的 ViewModelFactory 实例，因此不必要创建其所有依赖项的新实例。</p>
-<p>解决方案就是延迟创建依赖直到 create 方法调用时， 因为他在 Activity/Fragment 生命周期内只调用一次。我们可以使用延迟初始化来实现这一点：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoviesViewModel</span>(</span></span><br><span class="line">    private val repository: MoviesRepository,</span><br><span class="line">    <span class="keyword">private</span> val stringProvider: StringProvider,</span><br><span class="line">    <span class="keyword">private</span> val authorisationService: AuthorisationService</span><br><span class="line">) : ViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoviesViewModelFactory</span>(</span></span><br><span class="line">    private val repository: Provider&lt;MoviesRepository&gt;,             // Passing Providers here</span><br><span class="line">    <span class="keyword">private</span> val stringProvider: Provider&lt;StringProvider&gt;,           <span class="comment">// instead of passing directly dependencies</span></span><br><span class="line">    <span class="keyword">private</span> val authorisationService: Provider&lt;AuthorisationService&gt;</span><br><span class="line">) : ViewModelProvider.Factory &#123;</span><br><span class="line"></span><br><span class="line">    override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T &#123;  <span class="comment">// This method is called by ViewModelProvider only if ViewModel wasn't already created</span></span><br><span class="line">        <span class="keyword">return</span> MoviesViewModel(repository.get(),</span><br><span class="line">                               stringProvider.get(),                <span class="comment">// Deferred creating dependencies only if new insance of ViewModel is needed</span></span><br><span class="line">                               authorisationService.get()</span><br><span class="line">                              ) as T</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MoviesActivity : AppCompatActivity() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    lateinit <span class="keyword">var</span> viewModelFactory: MoviesViewModelFactory</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> lateinit <span class="keyword">var</span> viewModel: MoviesViewModel</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">onCreate</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_movies)</span><br><span class="line"></span><br><span class="line">        injectDependencies() <span class="comment">// Creating new instance of MoviesViewModelFactory</span></span><br><span class="line">        viewModel = ViewModelProviders.of(<span class="keyword">this</span>, viewModelFactory).get(MoviesViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class">    &#125;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">    ...</span></span><br><span class="line"><span class="class">&#125;</span></span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">翻译 android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/13/翻译-使用Architecture-Components常见的五个错误/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Android屏幕适配" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/08/Android屏幕适配/">Android屏幕适配</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/08/Android屏幕适配/" class="archive-article-date">
-  	<time datetime="2018-11-08T14:52:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="屏幕适配"><a href="#屏幕适配" class="headerlink" title=" 屏幕适配"></a> 屏幕适配</h3><h4 id="今日头条适配方案"><a href="#今日头条适配方案" class="headerlink" title="今日头条适配方案"></a>今日头条适配方案</h4><blockquote>
-<p>density: 1dp 占当前设备多少像素</p>
-</blockquote>
-<blockquote>
-<p>核心原理: 当前设备屏幕总宽度(单位为像素) / 设计图总宽度(单位为 dp) = density</p>
-</blockquote>
-<p>系统就是通过下面的方法来将 dp 转换为 px 的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">float</span> <span class="title">applyDimension</span><span class="params">(<span class="keyword">int</span> unit, <span class="keyword">float</span> value,</span></span></span><br><span class="line"><span class="function"><span class="params">                                       DisplayMetrics metrics)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (unit) &#123;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_PX:</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_DIP:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.density;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_SP:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.scaledDensity;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_PT:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">72</span>);</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_IN:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.xdpi;</span><br><span class="line">        <span class="keyword">case</span> COMPLEX_UNIT_MM:</span><br><span class="line">            <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">25.4f</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>默认以高或宽中的一个作为基准，进行适配</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">float</span> sNoncompatDensity;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">float</span> sNoncompatScaledDensity;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setCustomDensity</span><span class="params">(@NotNull Activity activity, @NonNull <span class="keyword">final</span> Application application)</span></span>&#123;</span><br><span class="line">    <span class="keyword">final</span> DisplayMetrics appDisplayMetrics = application.getResources().getDisplayMetrics();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(sNoncompatDensity == <span class="number">0</span>)&#123;</span><br><span class="line">        sNoncompatDensity = appDisplayMetrics.density;</span><br><span class="line">        sNoncompatScaledDensity = appDisplayMetrics.scaledDensity;</span><br><span class="line">        application.registerComponentCallbacks(<span class="keyword">new</span> ComponentCallbacks()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onConfigurationChanged</span><span class="params">(Configuration newConfig)</span></span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(newConfig != <span class="keyword">null</span> &amp;&amp; newConfig.fontScale &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                    sNoncompatScaledDensity = application.getResources().getDisplayMetrics().scaledDensity();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLowMemory</span><span class="params">()</span></span>&#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//此处的360是以设计图为360去适配的</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">float</span> targetDensity = appDisplayMetrics.widthPixels / <span class="number">360</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">float</span> targetScaledDensity = targetDensity * (sNoncompatScaledDensity / sNoncompatDensity);</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> targetDesityDpi = (<span class="keyword">int</span>)(<span class="number">160</span> * targetDensity);</span><br><span class="line"></span><br><span class="line">    appDisplayMetrics.Density = targetDensity;</span><br><span class="line">    appDisplayMEtrics.scaledDensity = targetScaledDensity;</span><br><span class="line">    appDisplayMetrics.densityDpi = targetDensityDpi;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> DisplayMetrics activityDisplayMetrics = activity.getResources().getDisplayMetrics();</span><br><span class="line">    activityDisplayMetrics.density = targetDensity;</span><br><span class="line">    activityDisplayMetrics.scaledDensity = targetScaledDensity;</span><br><span class="line">    activityDisplayMetrics.densityDpi = targetDensityDpi;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Smallest-适配方案"><a href="#Smallest-适配方案" class="headerlink" title="Smallest 适配方案"></a>Smallest 适配方案</h4><blockquote>
-<p>以宽度的 dp 为基准，生成所有设备对应的 dimens.xml 文件</p>
-</blockquote>
-<p>使用方法:</p>
-<ol>
-<li>在 Android Studio 中安装 ScreenMatch 插件</li>
-<li>使用 ScreenMatch 生成  所有设备对应的 dimens 文件</li>
-</ol>
-<h4 id="AndroidAutoSize-适配方案"><a href="#AndroidAutoSize-适配方案" class="headerlink" title="AndroidAutoSize 适配方案"></a>AndroidAutoSize 适配方案</h4><p>使用方法：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;manifest&gt;</span><br><span class="line">    &lt;application&gt;</span><br><span class="line">        &lt;meta-data</span><br><span class="line">            android:name=<span class="string">"design_width_in_dp"</span></span><br><span class="line">            android:value=<span class="string">"360"</span>/&gt;</span><br><span class="line">        &lt;meta-data</span><br><span class="line">            android:name=<span class="string">"design_height_in_dp"</span></span><br><span class="line">            android:value=<span class="string">"640"</span>/&gt;</span><br><span class="line">     &lt;/application&gt;</span><br><span class="line">&lt;/manifest&gt;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>自定义的实现 <strong>CustomAdapt</strong></li>
-<li>放弃适配实现<strong>CancelAdapt</strong></li>
-</ol>
-<h3 id="StatusBar-状态栏适配"><a href="#StatusBar-状态栏适配" class="headerlink" title="StatusBar 状态栏适配"></a>StatusBar 状态栏适配</h3><p><strong>设置状态栏颜色</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatusBarUtil.setColor(Activity activity, int color)</span><br></pre></td></tr></table></figure>
-<p><strong>设置状态栏半透明</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatusBarUtil.setTranslucent(Activity activity, int statusBarAlpha)</span><br></pre></td></tr></table></figure>
-<p><strong>设置状态栏全透明</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatusBarUtil.setTransparent(Activity activity)</span><br></pre></td></tr></table></figure>
-<p><strong>为使用 ImageView 作为头部的界面设置状态栏透明</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StatusBarUtil.setTranslucentForImageView(Activity activity, int statusBarAlpha, View needOffsetView)</span><br></pre></td></tr></table></figure>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
-<li><a href="https://juejin.im/post/5b7a29736fb9a019d53e7ee2" target="_blank" rel="noopener">骚年你的屏幕适配方式该升级了!（一）-今日头条适配方案</a></li>
-<li><a href="https://juejin.im/post/5ba197e46fb9a05d0b142c62" target="_blank" rel="noopener">骚年你的屏幕适配方式该升级了!（二）-smallestWidth 限定符适配方案</a></li>
-<li><a href="https://juejin.im/post/5bce688e6fb9a05cf715d1c2" target="_blank" rel="noopener">今日头条屏幕适配方案终极版正式发布!</a></li>
-<li><a href="https://mp.weixin.qq.com/s/d9QCoBP6kV9VSWvVldVVwA" target="_blank" rel="noopener">今日头条适配方案</a></li>
-<li><a href="https://www.jianshu.com/p/1302ad5a4b04" target="_blank" rel="noopener">限定符适配方案</a></li>
-<li><a href="https://github.com/laobie/StatusBarUtil" target="_blank" rel="noopener">StatusBarUtil</a></li>
-<li><a href="https://blog.csdn.net/u011810352/article/details/80587531" target="_blank" rel="noopener">Android 刘海屏适配全攻略</a></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android 屏幕适配</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/08/Android屏幕适配/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1197,7 +1448,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">android</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">java 集合 list</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1205,7 +1460,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">android ReactNative</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">翻译 android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1217,7 +1484,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">翻译 android</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android ConstraintLayout</a>
               </li>
             
             <div class="clearfix"></div>
