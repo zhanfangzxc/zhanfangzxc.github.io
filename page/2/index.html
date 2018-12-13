@@ -168,6 +168,177 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-深入理解java虚拟机之一" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/15/深入理解java虚拟机之一/">深入理解java虚拟机之一</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/15/深入理解java虚拟机之一/" class="archive-article-date">
+  	<time datetime="2018-11-15T08:42:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="../images/java虚拟机运行数据区.jpg" alt="java虚拟机运行数据区"></p>
+<h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><ol>
+<li>是一块较小的内存空间</li>
+<li>是当前线程所执行的字节码的行号指示器</li>
+<li>java 虚拟机的多线程是通过线程轮流切换并分配处理  器执行时间的方式来实现的，在任何一个确定的时刻，一个处理器都只会执行一条线程中的指令，因此， 为了线程切换能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器。</li>
+<li>程序计数器为线程私有的内存</li>
+<li>如果执行的是 java 字节码，记录的就是正在执行的虚拟机字节码指令的地址；如果正在执行的是 Native 方法，这个计数器值则为空。</li>
+<li>该区域是 java 虚拟机规范中没有规定任何 OutOfMemoryError 情况的区域。</li>
+</ol>
+<h3 id="Java-虚拟机栈"><a href="#Java-虚拟机栈" class="headerlink" title="Java 虚拟机栈"></a>Java 虚拟机栈</h3><ol>
+<li>线程私有的，生命周期与线程相同</li>
+<li>虚拟机栈描述的是 Java 方法执行的内存模型</li>
+<li>每个方法在执行的同时都会创建一个栈帧用于存储局部变量表 、操作数栈、动态链接、方法出口等信息。</li>
+<li>每一个方法从调用直至完成的过程，就对应着一个栈帧在虚拟机栈中入栈到出栈的过程。</li>
+</ol>
+<h4 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h4><ol>
+<li>存放了编译器可知的各种基本数据类型(boolean、byte、char、short、int、float、long、double)、对象引用和 returnAddress 类型。</li>
+<li>局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间时完全确定的。</li>
+<li>在方法运行期间不会改变局部变量表的大小。</li>
+<li>如果线程请求的栈深度大于虚拟机所允许的深度，将抛出 StackOverFlowError 异常；如果虚拟机无法申请到足够的内存，就会抛出 OutOfMemoryError 异常。</li>
+</ol>
+<h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><ol>
+<li>本地方法栈为虚拟机使用到的 Native 方法服务</li>
+<li>本地方法栈也会抛出 StackOverflowError 和 OutOFMemoryError 异常</li>
+</ol>
+<h3 id="java-堆"><a href="#java-堆" class="headerlink" title="java 堆"></a>java 堆</h3><ol>
+<li>java 堆是 java 虚拟机所管理的内存中最大的一块</li>
+<li>是被所有线程共享的  一块内存区域</li>
+<li>在虚拟机启动时创建，此区域的唯一目的是存放对象实例。</li>
+<li>java 堆是垃圾收集器管理的主要区域</li>
+<li>java 堆还可以细分为：新生代和老年代；再细致一点的有 Eden 空间、From Survivor 空间、To Survivor 空间等。</li>
+</ol>
+<h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><ol>
+<li>与 java 堆一样事各个线程共享的内存区域</li>
+<li>用于存储已被虚拟机加载的类信息，常量，静态变量，即时编译器编译后的代码等数据。</li>
+<li>该区域的内存回收目标主要是针对常量池的回收和堆类型的卸载。</li>
+</ol>
+<h4 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><ol>
+<li>是方法区的一部分</li>
+<li>用于存放编译器生成的各种字面量和符号引用，这部分内容将在类加载后进入方法区的运行时常量池中存放。</li>
+<li>常量池无法再申请到内存时会抛出 OutOfMemory 异常。</li>
+</ol>
+<h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><ol>
+<li>不是虚拟机运行时数据区的一部分，也不是 Java 虚拟机规范中定义的内存区域。</li>
+<li>也可能导致 OutOfMemoryError 异常</li>
+<li>直接内存不会受到 java 堆大小的限制。</li>
+</ol>
+<h3 id="虚拟机对象"><a href="#虚拟机对象" class="headerlink" title="虚拟机对象"></a>虚拟机对象</h3><h4 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h4><ol>
+<li>遇到一个 new 指令，首先去检查这个指令的参数是否能在常量池中定位到一个类的符号引用。</li>
+<li>接着检查该符号引用代表的类是否已被加载、解析和初始化过，如果没有，那必须先执行相应的类加载过程。</li>
+<li>类  检查通过后，接下来虚拟机将为新生的对象分配内存，对象所需内存的大小在类加载完成后便可完全确定。</li>
+<li>内存分配完成后，虚拟机需要将分配的内存空间都初始化为零值。</li>
+<li>执行完 new 指令之后会直接执行\&lt;init>方法<blockquote>
+<p>对于内存分配有两种方式：</p>
+<ol>
+<li>对于规整的内存，所有用过的内存放一边，空闲的内存放在另一边，中间放着一个指针作为分界点的指示器，那所分配的内存就是  把指针向空闲空间挪动一段与对象大小相等的距离，这种分配方式称为<strong>指针碰撞</strong></li>
+<li>对于不规整的内存,已使用的内存和空闲的内存相互交错，就没办法进行指针碰撞了，虚拟机就必须维护一个列表，记录哪些内存块是可用的，在分配的时候从列表中找到一块足够大的空间划分给对象实例，并更新列表上的记录，这种分配方式称为<strong>空闲列表</strong></li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>问题：正在给对象 A 分配内存，指针还没来得及修改，对象 B 又同时使用了原来的指针来分配内存的情况。</p>
+</blockquote>
+<p>解决方案有两种：</p>
+<ol>
+<li>对分配内存空间的动作进行同步处理——实际上虚拟机采用 CAS 配上失败重试的方式保证更新操作的原子性。</li>
+<li>把内存分配的动作按照线程划分在不同的空间之中进行，即每个线程在 Java 堆中预先分配一小块内存，称为本地线程分配缓冲(TLAB),哪个线程要分配内存，就在哪个线程的 TLAB 上分配，只有 TLAB 用完并分配新的 TLAB 时，才需要同步锁定。</li>
+</ol>
+<h4 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h4><p>在 HotSpot 虚拟机中，对象在内存中存储的布局可以分为 3 块区域：</p>
+<ol>
+<li><p>对象头</p>
+<ol>
+<li>第一部分用于存储对象自身的运行时数据</li>
+<li>第二部分是类型指针，即对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例</li>
+</ol>
+</li>
+<li><p>实例数据：对象真正存储的有效信息，也是在程序代码中所定义的各种类型的字段内容。</p>
+</li>
+<li>对齐填充：不是必然存在的，也没有特别的  含义，仅仅起着占位符的作用。</li>
+</ol>
+<h4 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h4><ol>
+<li>主流的访问方式有使用<strong>句柄</strong>和<strong>直接  指针</strong>两种。</li>
+<li><p>如果使用句柄访问的话，java 堆中将划分出一块内存来作为句柄池，reference 中存储的就是对象的句柄地址，而句柄中包含了对象实例数据与类型数据各自的具体地址信息。</p>
+<p><img src="../images/句柄访问.jpg" alt="句柄访问方式"></p>
+</li>
+</ol>
+<p>3.使用指针访问，那么 Java 堆对象的布局中就必须考虑如何放置访问类型数据的相关信息，而 reference 中存储的直接就是对象地址。</p>
+<p><img src="../images/指针访问.jpg" alt="指针访问方式"></p>
+<p>使用句柄访问的最大好处是 reference 中存储的事稳定的句柄地址，在对象被移动时只会改变句柄中的实例数据指针，而 reference 本身不需要修改。</p>
+<p>使用直接指针访问方式的最大好处就是速度更快，他节省了一次指针定位的时间开销。</p>
+<h3 id="Java-堆溢出"><a href="#Java-堆溢出" class="headerlink" title="Java 堆溢出"></a>Java 堆溢出</h3><p>java 堆用于存储对象实例，只要不断的创建对象，并且保证 GC Roots 到对象之间与可达路径来避免垃圾回收机制清除这些对象，那么在对象数量到达最大堆的容量限制后就会产生内存溢出异常。</p>
+<h3 id="方法区与运行时常量池溢出"><a href="#方法区与运行时常量池溢出" class="headerlink" title="方法区与运行时常量池溢出"></a>方法区与运行时常量池溢出</h3><blockquote>
+<p>String.intern()是一个Native方法，他的作用是：如果字符串常量池中已经包含一个等于此String对象的字符串，则返回代表池中这个字符串的String对象；否则将此String对象包含的字符串添加到常量池中，并且返回此String对象的引用。</p>
+</blockquote>
+<ol>
+<li>JDK1.6及以前的版本中，常量池分配在永久代内，可以通过-XX:PermSize和-XX:MaxPermSize限制方法区的大小，从而间接限制其中常量池的容量。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">虚拟机</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/15/深入理解java虚拟机之一/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Android-Studio常用命令" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -591,10 +762,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">java 集合 list</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">android 屏幕适配</a>
               </li>
              
@@ -603,7 +770,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android ReactNative</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android ConstraintLayout</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">java 集合 list</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -611,7 +782,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">翻译 android</a>
+                <a href="javascript:void(0)" class="js-tag color5">android ReactNative</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -619,11 +790,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">翻译 android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">android glide</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android ConstraintLayout</a>
+                <a href="javascript:void(0)" class="js-tag color2">java 集合 map</a>
               </li>
             
             <div class="clearfix"></div>
