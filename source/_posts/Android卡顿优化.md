@@ -101,3 +101,66 @@ Simplepref 支持 java 代码的性能分析，分为如下几个阶段：
 2. Flame Chart
 
    ![flame_chart](../images/flame_chart.png)
+
+### 卡顿监控
+
+**基于消息队列实现**
+
+假设每隔一秒向消息队列的头部插入一条空消息，假设一秒后这个消息并没有被主线程消费掉，说明阻塞消息运行的时间在 0-1 秒之间。换句话说，如果需要监控 3 秒卡顿，那么在第四次轮询中头部消息依然没有被消费的话，就可以确定主线程出现了一次 3 秒以上的卡顿。
+
+![消息队列](../images/消息队列.png)
+
+**插桩**
+
+使用 Inline Hook 技术，实现类似 Nanoscope 先写内存的方案。
+
+1. 避免方法数暴增。在函数的入口和出口应该插入相同的函数，在编译  时提前给代码中每个方法分配一个独立的 ID 作为参数。
+2. 过滤简单的函数。过滤一些类似直接 return、i++这样的简单函数，并且支持黑名单配置，对于一些调用非常频繁的函数，需要添加到黑名单中来降低整个方案性能的损耗。
+
+**[Profilo](https://github.com/facebookincubator/profilo)**
+
+1. 集成 atrace 功能
+2. 快速获取 Java 堆栈。
+
+   1. 通过间隔发送 SIGPROF 信号，Signal Handler 捕获到信号后，拿到当前正在执行的 Thread,通过 Thread 对象可以获取当前线程的 ManagedStack，ManagedStack 是一个单链表，他保存了当前的 ShadowFrame 或者 QuickFrame 栈指针，先依次遍历 ManagedStack 链表，然后遍历其内部的 ShadowFrame 或者 QuickFrame 还原一个可读的调用栈，从而 unwind 出当前的 java 堆栈。
+   2. 不支持 Android 8.0 和 Android 9.0
+
+### 帧率监控
+
+1. **Choreographer**
+2. 在界面存在绘制的时候监控
+3. 将连续丢帧超过 700 毫秒定义为冻帧，也就是连续丢帧 42 帧以上。
+
+> 冻帧率就是计算发生冻帧时间在所有时间的占比。
+
+```
+//监听界面绘制行为
+
+getWindow().getDecorView().getViewTreeObserver().addOnDrawListener
+```
+
+### 生命周期监控
+
+1. 监控 Activity、Service、Receiver 组件生命周期的耗时和调用次数。
+2. 监控各个进程生命周期的启动次数和耗时。
+
+### 线程监控
+
+1. 监控线程数量，需要监控数量多少，线程创建方式，
+2. 线程时间，监控线程的用户时间 utime，系统时间 stime 和优先级，主要是看哪些线程 utime+stime 时间比较多，占用了过多的 cpu。
+
+###  内容扩展
+
+1. [Linux 环境下进程的 CPU 占用率](http://www.samirchen.com/linux-cpu-performance/)
+2. [Linux 文档](http://man7.org/linux/man-pages/man5/proc.5.html)
+3. [TraceView](http://developer.android.com/studio/profile/generate-trace-logs)
+4. [nanoscope](http://github.com/uber/nanoscope)
+5. [代码手动设置](http://github.com/uber/nanoscope/wiki/Architecture%3A-Nanoscope-ROM#java-api)
+6. [ftrace](http://source.android.com/devices/tech/debug/ftrace)
+7. [atrace](http://android.googlesource.com/platform/frameworks/native/+/master/cmds/atrace/atrace.cpp)
+8. [Simpleperf](http://android.googlesource.com/platform/system/extras/+/master/simpleperf/doc/README.md)
+9. [ftrace 简介](http://www.ibm.com/developerworks/cn/linux/l-cn-ftrace/index.html)
+10. [ftrace 使用上](http://www.ibm.com/developerworks/cn/linux/l-cn-ftrace1/index.html)
+11. [ftrace 使用下](http://www.ibm.com/developerworks/cn/linux/l-cn-ftrace2/index.html)
+12. [atrace 介绍](http://source.android.com/devices/tech/debug/ftrace)
+13. [atrace 实现](http://android.googlesource.com/platform/frameworks/native/+/master/cmds/atrace/atrace.cpp)
