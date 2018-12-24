@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="坚持远方">
 <meta property="og:description" content="程序计数器 是一块较小的内存空间 是当前线程所执行的字节码的行号指示器 java 虚拟机的多线程是通过线程轮流切换并分配处理  器执行时间的方式来实现的，在任何一个确定的时刻，一个处理器都只会执行一条线程中的指令，因此， 为了线程切换能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器。 程序计数器为线程私有的内存 如果执行的是 java 字节码，记录的就是正在执行的虚拟机字节码指令">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://zhanfangzxc.github.io/2018/11/15/images/java虚拟机运行数据区.jpg">
-<meta property="og:image" content="https://zhanfangzxc.github.io/2018/11/15/images/句柄访问.jpg">
-<meta property="og:image" content="https://zhanfangzxc.github.io/2018/11/15/images/指针访问.jpg">
+<meta property="og:image" content="https://zhanfangzxc.github.io/2018/11/15/深入理解java虚拟机之一/images/java虚拟机运行数据区.jpg">
+<meta property="og:image" content="https://zhanfangzxc.github.io/2018/11/15/深入理解java虚拟机之一/images/句柄访问.jpg">
+<meta property="og:image" content="https://zhanfangzxc.github.io/2018/11/15/深入理解java虚拟机之一/images/指针访问.jpg">
 <meta property="og:updated_time" content="2018-11-16T02:44:51.995Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解java虚拟机之一">
 <meta name="twitter:description" content="程序计数器 是一块较小的内存空间 是当前线程所执行的字节码的行号指示器 java 虚拟机的多线程是通过线程轮流切换并分配处理  器执行时间的方式来实现的，在任何一个确定的时刻，一个处理器都只会执行一条线程中的指令，因此， 为了线程切换能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器。 程序计数器为线程私有的内存 如果执行的是 java 字节码，记录的就是正在执行的虚拟机字节码指令">
-<meta name="twitter:image" content="https://zhanfangzxc.github.io/2018/11/15/images/java虚拟机运行数据区.jpg">
+<meta name="twitter:image" content="https://zhanfangzxc.github.io/2018/11/15/深入理解java虚拟机之一/images/java虚拟机运行数据区.jpg">
   
     <link rel="alternative" href="/atom.xml" title="坚持远方" type="application/atom+xml">
   
@@ -191,7 +191,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="../images/java虚拟机运行数据区.jpg" alt="java虚拟机运行数据区"></p>
+        <p><img src="/2018/11/15/深入理解java虚拟机之一/images/java虚拟机运行数据区.jpg" alt="java虚拟机运行数据区"></p>
 <h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><ol>
 <li>是一块较小的内存空间</li>
 <li>是当前线程所执行的字节码的行号指示器</li>
@@ -275,11 +275,11 @@
 <h4 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h4><ol>
 <li>主流的访问方式有使用<strong>句柄</strong>和<strong>直接  指针</strong>两种。</li>
 <li><p>如果使用句柄访问的话，java 堆中将划分出一块内存来作为句柄池，reference 中存储的就是对象的句柄地址，而句柄中包含了对象实例数据与类型数据各自的具体地址信息。</p>
-<p><img src="../images/句柄访问.jpg" alt="句柄访问方式"></p>
+<p><img src="/2018/11/15/深入理解java虚拟机之一/images/句柄访问.jpg" alt="句柄访问方式"></p>
 </li>
 </ol>
 <p>3.使用指针访问，那么 Java 堆对象的布局中就必须考虑如何放置访问类型数据的相关信息，而 reference 中存储的直接就是对象地址。</p>
-<p><img src="../images/指针访问.jpg" alt="指针访问方式"></p>
+<p><img src="/2018/11/15/深入理解java虚拟机之一/images/指针访问.jpg" alt="指针访问方式"></p>
 <p>使用句柄访问的最大好处是 reference 中存储的事稳定的句柄地址，在对象被移动时只会改变句柄中的实例数据指针，而 reference 本身不需要修改。</p>
 <p>使用直接指针访问方式的最大好处就是速度更快，他节省了一次指针定位的时间开销。</p>
 <h3 id="Java-堆溢出"><a href="#Java-堆溢出" class="headerlink" title="Java 堆溢出"></a>Java 堆溢出</h3><p>java 堆用于存储对象实例，只要不断的创建对象，并且保证 GC Roots 到对象之间与可达路径来避免垃圾回收机制清除这些对象，那么在对象数量到达最大堆的容量限制后就会产生内存溢出异常。</p>
@@ -555,7 +555,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">android 屏幕适配</a>
+                <a href="javascript:void(0)" class="js-tag color1">android 优化</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,7 +563,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android ConstraintLayout</a>
+                <a href="javascript:void(0)" class="js-tag color3">android 屏幕适配</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -571,11 +571,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color2">java 集合 map</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android ConstraintLayout</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android ReactNative</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">java 虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">android glide</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -584,14 +600,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">翻译 android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">android glide</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java 集合 map</a>
               </li>
             
             <div class="clearfix"></div>

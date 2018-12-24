@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="坚持远方">
 <meta property="og:description" content="类文件结构Class 文件格式采用一种类似于 C 语言结构体的伪结构来存储数据，这种伪结构有两种数据类型：无符号数和表。  无符号数 属于基本的数据类型，以 u1，u2，u4，u8 来分别表示 1 个字节，2 个字节，4 个字节和 8 个字节的无符号数，可以用来描述数字，索引引用，数量值或者按照 UTF-8 编码构成的字符串值 表 由多个无符号数或者其他表作为数据项构成的复合数据类型，所以表都习惯">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/07/images/classfile.png">
-<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/07/images/access_flags.png">
-<meta property="og:updated_time" content="2018-12-09T09:25:50.879Z">
+<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/07/深入理解java虚拟机之六/images/classfile.png">
+<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/07/深入理解java虚拟机之六/images/access_flags.png">
+<meta property="og:updated_time" content="2018-12-14T09:53:54.677Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解java虚拟机之六">
 <meta name="twitter:description" content="类文件结构Class 文件格式采用一种类似于 C 语言结构体的伪结构来存储数据，这种伪结构有两种数据类型：无符号数和表。  无符号数 属于基本的数据类型，以 u1，u2，u4，u8 来分别表示 1 个字节，2 个字节，4 个字节和 8 个字节的无符号数，可以用来描述数字，索引引用，数量值或者按照 UTF-8 编码构成的字符串值 表 由多个无符号数或者其他表作为数据项构成的复合数据类型，所以表都习惯">
-<meta name="twitter:image" content="https://zhanfangzxc.github.io/2018/12/07/images/classfile.png">
+<meta name="twitter:image" content="https://zhanfangzxc.github.io/2018/12/07/深入理解java虚拟机之六/images/classfile.png">
   
     <link rel="alternative" href="/atom.xml" title="坚持远方" type="application/atom+xml">
   
@@ -195,7 +195,7 @@
 <li>无符号数 属于基本的数据类型，以 u1，u2，u4，u8 来分别表示 1 个字节，2 个字节，4 个字节和 8 个字节的无符号数，可以用来描述数字，索引引用，数量值或者按照 UTF-8 编码构成的字符串值</li>
 <li>表 由多个无符号数或者其他表作为数据项构成的复合数据类型，所以表都习惯性的以”_info”结尾。用于描述有层次关系的复合结构的数据，整个 class 文件本质上就是一张表。</li>
 </ol>
-<p><img src="../images/classfile.png" alt="类文件结构"></p>
+<p><img src="/2018/12/07/深入理解java虚拟机之六/images/classfile.png" alt="类文件结构"></p>
 <ol>
 <li>magic 魔数 用来确定这个文件是否能被虚拟机所能接收的 class 文件，魔数固定为 0xCAFEBABE，不会改变。</li>
 <li>minor_version(副版本号) major_version(主版本号)</li>
@@ -219,7 +219,7 @@
 <ol start="5">
 <li>access_flags 访问标志 是一种由标志组成的掩码，用于表示某各类或者接口的访问权限以及属性。</li>
 </ol>
-<p><img src="../images/access_flags.png" alt="访问标志"></p>
+<p><img src="/2018/12/07/深入理解java虚拟机之六/images/access_flags.png" alt="访问标志"></p>
 <pre><code>1. 带有ACC_INTERFACE标志的class文件表示是接口而不是类，反之则表示是类而不是接口
 2. 如果一个类被这只了ACC_INTERFACE，那么同时也得设置ACC_ABSTRACT,同时不能再设置ACC_FINAL、ACC_SUPER或ACC_ENUM标志。
 3. 如果没有设置ACC_INTERFACE标志，这个class文件可以具有除ACC_ANNOTATION之外的其他所有标志，ACC_FINAL和ACC_ABSTRACT这类互斥的标志除外
@@ -236,6 +236,46 @@
 <li>methods[] 方法表 只包含当前类或接口中的方法，不包括从父类或父接口继承的方法。</li>
 <li>attributes_count 属性计数器 表示当前 class 文件属性表的成员个数，</li>
 <li>attributes[] 属性表 每个项的值都是 attribute_info 结构。</li>
+</ol>
+<h3 id="属性表集合"><a href="#属性表集合" class="headerlink" title="属性表集合"></a>属性表集合</h3><p><strong>Code属性</strong></p>
+<p>Java程序方法体中的代码经过javac编译器处理后，最终变成了字节码指令存储在Code属性中。</p>
+<p>接口或者抽象类中的方法就不存在该属性。</p>
+<p>slot是虚拟机为局部变量分配内存的最小单位，对于byte，char，short，int，float，boolean和returnAddress不等长度不超过32位的数据类型，每个局部变量占用1个slot。而double和long这种64位的变量占用2个slot。</p>
+<p><strong>Exception属性</strong></p>
+<p>Exceptions属性是列举出方法中可能抛出的受查异常，也就是方法描述时在throws关键字后面列举的异常。</p>
+<p><strong>LineNumberTable属性</strong></p>
+<p>LineNumberTable属性用于描述java源码行号和与字节码行号之间的对应关系。</p>
+<p><strong>LocalVariableTable属性</strong></p>
+<p>LocalVariableTable属性用于描述栈帧中局部变量表中的变量与Java源码中定义的变量之间的关系。</p>
+<p>jdk1.5之后，新增了一个LocalVariableTypeTable属性用来记录泛型信息。</p>
+<p><strong>SourceFile</strong></p>
+<p>用来记录生成这个Class文件的源码文件名称。</p>
+<p><strong>ConstantValue属性</strong></p>
+<p>通知虚拟机自动为静态变量复制，只有被static关键字修饰的变量才能使用这项属性。</p>
+<ol>
+<li><p>对于非static类型的变量的赋值是在实例构造器initf方法中进行的。</p>
+</li>
+<li><p>而对于类变量，则由两种方式可以选择，在类构造器clinit方法中或者使用ConstantValue属性。</p>
+<ol>
+<li>如果同时使用final和static修饰一个变量，并且这个变量的数据类型时基本数据类型或者java.lang.String的话，则生成ConstantValue属性来进行初始化</li>
+<li>如果这个变量没有被final修饰，或者并非基本类型及字符串，则将会选择在clinit方法中进行初始化。</li>
+</ol>
+</li>
+</ol>
+<p><strong>InnerClass</strong>属性</p>
+<p>用于记录内部类与宿主类之间的关联</p>
+<p><strong>Deprecated 及 Synthetic属性</strong></p>
+<p>用于标志类型的布尔属性。</p>
+<p><strong>StackMapTable属性</strong></p>
+<p>是一个复杂的变长属性，位于Code属性的属性表中，这个属性会在虚拟机类加载的字节码验证阶段被新类型检查验证器使用，目的在于代替以前比较消耗性能的基于数据流分析的类型推导验证器。</p>
+<p><strong>Signature属性</strong></p>
+<p>是一个可选的定长属性，可以出现于类、属性表和方法表结构的属性表中。反射之后能够通过这个属性获取泛型类型。</p>
+<p><strong>BootstrapMethods属性</strong></p>
+<p>这个属性用于保存invokedynamic指令引用的引导方法限定符。</p>
+<h3 id="字节码指令集简介"><a href="#字节码指令集简介" class="headerlink" title="字节码指令集简介"></a>字节码指令集简介</h3><p>java虚拟机面向操作数栈而不是寄存器的架构。</p>
+<h3 id="字节码与数据类型"><a href="#字节码与数据类型" class="headerlink" title="字节码与数据类型"></a>字节码与数据类型</h3><ol>
+<li>虚拟机指令中大部分都不支持byte、short、char、以及没有任何指令支持boolean类型。</li>
+<li>编译器会在编译器或运行期将byte和short类型的数据带符号扩展为响应的int类型数据，将boolean和char类型数据零位扩展为响应的int类型数据。</li>
 </ol>
 
       
@@ -503,7 +543,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">android 屏幕适配</a>
+                <a href="javascript:void(0)" class="js-tag color1">android 优化</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -511,7 +551,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android ConstraintLayout</a>
+                <a href="javascript:void(0)" class="js-tag color3">android 屏幕适配</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -519,11 +559,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color2">java 集合 map</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android ConstraintLayout</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android ReactNative</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">java 虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">android glide</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -532,14 +588,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">翻译 android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">android glide</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java 集合 map</a>
               </li>
             
             <div class="clearfix"></div>

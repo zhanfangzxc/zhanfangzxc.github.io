@@ -16,14 +16,15 @@
 <meta property="og:site_name" content="坚持远方">
 <meta property="og:description" content="CPU 时间 用户时间：执行用户态应用程序代码所消耗的时间 系统时间：执行内核态系统调用所消耗的时间，包括 I/O、锁、中断以及其他系统调用的时间。  获取设备的 CPU 信息 12345// 获取CPU核心数cat /sys/devices/system/cpu/possible// 获取CPU的频率cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/11/images/方法调用.png">
-<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/11/images/flame_chart.png">
-<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/11/images/消息队列.png">
-<meta property="og:updated_time" content="2018-12-13T04:05:06.950Z">
+<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/11/Android卡顿优化/images/方法调用.png">
+<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/11/Android卡顿优化/images/flame_chart.png">
+<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/11/Android卡顿优化/images/消息队列.png">
+<meta property="og:image" content="https://zhanfangzxc.github.io/2018/12/11/images/线程状态.png">
+<meta property="og:updated_time" content="2018-12-24T07:34:53.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android卡顿优化">
 <meta name="twitter:description" content="CPU 时间 用户时间：执行用户态应用程序代码所消耗的时间 系统时间：执行内核态系统调用所消耗的时间，包括 I/O、锁、中断以及其他系统调用的时间。  获取设备的 CPU 信息 12345// 获取CPU核心数cat /sys/devices/system/cpu/possible// 获取CPU的频率cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo">
-<meta name="twitter:image" content="https://zhanfangzxc.github.io/2018/12/11/images/方法调用.png">
+<meta name="twitter:image" content="https://zhanfangzxc.github.io/2018/12/11/Android卡顿优化/images/方法调用.png">
   
     <link rel="alternative" href="/atom.xml" title="坚持远方" type="application/atom+xml">
   
@@ -262,15 +263,15 @@
 </ol>
 <h3 id="展示方式"><a href="#展示方式" class="headerlink" title="展示方式"></a>展示方式</h3><ol>
 <li><p>Call Chart：是 TraceView 和 systrace 默认使用的展示方式，按照应用程序的函数执行顺序来展示，适合用于分析整个流程的调用。</p>
-<p><img src="../images/方法调用.png" alt="方法调用"></p>
+<p><img src="/2018/12/11/Android卡顿优化/images/方法调用.png" alt="方法调用"></p>
 </li>
 <li><p>Flame Chart</p>
-<p><img src="../images/flame_chart.png" alt="flame_chart"></p>
+<p><img src="/2018/12/11/Android卡顿优化/images/flame_chart.png" alt="flame_chart"></p>
 </li>
 </ol>
 <h3 id="卡顿监控"><a href="#卡顿监控" class="headerlink" title="卡顿监控"></a>卡顿监控</h3><p><strong>基于消息队列实现</strong></p>
 <p>假设每隔一秒向消息队列的头部插入一条空消息，假设一秒后这个消息并没有被主线程消费掉，说明阻塞消息运行的时间在 0-1 秒之间。换句话说，如果需要监控 3 秒卡顿，那么在第四次轮询中头部消息依然没有被消费的话，就可以确定主线程出现了一次 3 秒以上的卡顿。</p>
-<p><img src="../images/消息队列.png" alt="消息队列"></p>
+<p><img src="/2018/12/11/Android卡顿优化/images/消息队列.png" alt="消息队列"></p>
 <p><strong>插桩</strong></p>
 <p>使用 Inline Hook 技术，实现类似 Nanoscope 先写内存的方案。</p>
 <ol>
@@ -304,7 +305,48 @@
 <li>监控线程数量，需要监控数量多少，线程创建方式，</li>
 <li>线程时间，监控线程的用户时间 utime，系统时间 stime 和优先级，主要是看哪些线程 utime+stime 时间比较多，占用了过多的 cpu。</li>
 </ol>
-<h3 id="内容扩展"><a href="#内容扩展" class="headerlink" title=" 内容扩展"></a> 内容扩展</h3><ol>
+<h3 id="卡顿现场"><a href="#卡顿现场" class="headerlink" title="卡顿现场"></a>卡顿现场</h3><h4 id="Java-实现"><a href="#Java-实现" class="headerlink" title="Java 实现"></a>Java 实现</h4><ol>
+<li>获取 Java 线程状态:通过 Thread 的 getState 方法可以获取线程状态</li>
+</ol>
+<p>当线程无法获取下面代码中的 object 对象锁的时候，线程就会进入 BLOCKED 状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized (object)&#123;</span><br><span class="line">  dosomething();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>WAITING、TIME_WAITING、BLOCKED 状态都是需要特别注意的状态</strong></p>
+<blockquote>
+<p>BLOCKED 是指线程正在等待获取锁<br>WAITING 是指线程正在等待其他线程的唤醒动作，对应下面的代码：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized (object)&#123;</span><br><span class="line">  object.wait();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当一个线程进入 WAITING 状态时，他不仅会释放 CPU 资源，还会将持有的 object 锁也同时释放。</p>
+<ol start="2">
+<li>获取所有线程堆栈：<strong>Thread.getAllStackTraces()</strong></li>
+</ol>
+<p><strong>Android 7.0 Thread.getAllStackTraces() 是不会返回主线程的堆栈的</strong></p>
+<h4 id="SIGQUIT-信号实现"><a href="#SIGQUIT-信号实现" class="headerlink" title="SIGQUIT 信号实现"></a>SIGQUIT 信号实现</h4><ol>
+<li>Native 线程状态</li>
+</ol>
+<p>本质上 Java 线程的状态其实是 Native 线程的一种映射。<br><img src="/2018/12/11/Android卡顿优化/../images/线程状态.png" alt="线程状态"></p>
+<ol start="2">
+<li>获得 ANR 日志</li>
+</ol>
+<p>如何拿到卡顿时的 ANR 日志？</p>
+<ol>
+<li>第一步，当监控到主线程卡顿时，主动向系统发送 SIGQUIT 信号</li>
+<li>等待/data/anr/traces.txt 文件生成。</li>
+<li>文件生成以后进行上报</li>
+</ol>
+<h4 id="Hook-实现"><a href="#Hook-实现" class="headerlink" title="Hook 实现"></a>Hook 实现</h4><h4 id="现场信息"><a href="#现场信息" class="headerlink" title="现场信息"></a>现场信息</h4><ol>
+<li>CPU 使用率和调度信息</li>
+<li>内存相关信息</li>
+<li>I/O 和网络相关</li>
+</ol>
+<h3 id="卡顿分析"><a href="#卡顿分析" class="headerlink" title="卡顿分析"></a>卡顿分析</h3><h4 id="卡顿率"><a href="#卡顿率" class="headerlink" title="卡顿率"></a>卡顿率</h4><p>卡顿问题的影响面：</p>
+<blockquote>
+<p>UV 卡顿率 = 发生过卡顿 UV / 开启卡顿采集 UV</p>
+</blockquote>
+<p>卡顿的严重程度</p>
+<blockquote>
+<p>PV 卡顿率 = 发生过卡顿 PV / 启动采集 PV</p>
+</blockquote>
+<h4 id="卡顿树"><a href="#卡顿树" class="headerlink" title="卡顿树"></a>卡顿树</h4><h3 id="内容扩展"><a href="#内容扩展" class="headerlink" title=" 内容扩展"></a> 内容扩展</h3><ol>
 <li><a href="http://www.samirchen.com/linux-cpu-performance/" target="_blank" rel="noopener">Linux 环境下进程的 CPU 占用率</a></li>
 <li><a href="http://man7.org/linux/man-pages/man5/proc.5.html" target="_blank" rel="noopener">Linux 文档</a></li>
 <li><a href="http://developer.android.com/studio/profile/generate-trace-logs" target="_blank" rel="noopener">TraceView</a></li>
@@ -318,6 +360,11 @@
 <li><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-ftrace2/index.html" target="_blank" rel="noopener">ftrace 使用下</a></li>
 <li><a href="http://source.android.com/devices/tech/debug/ftrace" target="_blank" rel="noopener">atrace 介绍</a></li>
 <li><a href="http://android.googlesource.com/platform/frameworks/native/+/master/cmds/atrace/atrace.cpp" target="_blank" rel="noopener">atrace 实现</a></li>
+<li><a href="http://developer.android.com/reference/java/lang/Thread.State" target="_blank" rel="noopener">Thread.State</a></li>
+<li><a href="http://juejin.im/post/5b31b510e51d4558a426f7e9" target="_blank" rel="noopener">Java 线程 Dump 分析</a></li>
+<li><a href="https://developer.android.com/topic/performance/vitals/anr" target="_blank" rel="noopener">Anr</a></li>
+<li><a href="http://cloud.tencent.com/developer/article/1064396" target="_blank" rel="noopener">手 Q Android 线程死锁监控与自动化分析实践</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-lo-jpda2/index.html" target="_blank" rel="noopener">JVMTI</a></li>
 </ol>
 
       
@@ -585,7 +632,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">android 屏幕适配</a>
+                <a href="javascript:void(0)" class="js-tag color1">android 优化</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -593,7 +640,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android ConstraintLayout</a>
+                <a href="javascript:void(0)" class="js-tag color3">android 屏幕适配</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -601,11 +648,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color2">java 集合 map</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android ConstraintLayout</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android ReactNative</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">java 虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">android glide</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -614,14 +677,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">翻译 android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">android glide</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java 集合 map</a>
               </li>
             
             <div class="clearfix"></div>

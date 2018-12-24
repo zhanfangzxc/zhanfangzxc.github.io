@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://zhanfangzxc.github.io">
-  <title>Tag: android glide | 坚持远方</title>
+  <title>Android启动优化 | 坚持远方</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="时人莫小池中水，浅处无妨有卧龙。">
-<meta name="keywords" content="Android">
-<meta property="og:type" content="website">
-<meta property="og:title" content="坚持远方">
-<meta property="og:url" content="https://zhanfangzxc.github.io/tags/android-glide/index.html">
+  <meta name="description" content="启动分析启动过程分析 预览窗口显示 闪屏显示 主页显示 界面可操作  启动问题分析 点击图标很久都不响应 首页显示太慢 首页显示后无法操作  启动优化优化工具通过如下代码查看手机支持哪些 systrace 类型 1python systrace.py --list-categories  通过 systrace+函数插桩来对启动进行分析  123456789class Trace&amp;#123;">
+<meta name="keywords" content="android 优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android启动优化">
+<meta property="og:url" content="https://zhanfangzxc.github.io/2018/12/24/Android启动优化/index.html">
 <meta property="og:site_name" content="坚持远方">
-<meta property="og:description" content="时人莫小池中水，浅处无妨有卧龙。">
+<meta property="og:description" content="启动分析启动过程分析 预览窗口显示 闪屏显示 主页显示 界面可操作  启动问题分析 点击图标很久都不响应 首页显示太慢 首页显示后无法操作  启动优化优化工具通过如下代码查看手机支持哪些 systrace 类型 1python systrace.py --list-categories  通过 systrace+函数插桩来对启动进行分析  123456789class Trace&amp;#123;">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-24T09:34:20.339Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="坚持远方">
-<meta name="twitter:description" content="时人莫小池中水，浅处无妨有卧龙。">
+<meta name="twitter:title" content="Android启动优化">
+<meta name="twitter:description" content="启动分析启动过程分析 预览窗口显示 闪屏显示 主页显示 界面可操作  启动问题分析 点击图标很久都不响应 首页显示太慢 首页显示后无法操作  启动优化优化工具通过如下代码查看手机支持哪些 systrace 类型 1python systrace.py --list-categories  通过 systrace+函数插桩来对启动进行分析  123456789class Trace&amp;#123;">
   
     <link rel="alternative" href="/atom.xml" title="坚持远方" type="application/atom+xml">
   
@@ -166,60 +167,241 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Android启动优化" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/26/翻译-Glide4和Stetho轻松调试图片加载/" class="archive-article-date">
-  	<time datetime="2018-11-26T03:03:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-26</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/26/翻译-Glide4和Stetho轻松调试图片加载/">翻译-Glide4和Stetho轻松调试图片加载</a>
+    <h1 class="article-title" itemprop="name">
+      Android启动优化
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/12/24/Android启动优化/" class="archive-article-date">
+  	<time datetime="2018-12-24T07:35:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="启动分析"><a href="#启动分析" class="headerlink" title="启动分析"></a>启动分析</h3><h4 id="启动过程分析"><a href="#启动过程分析" class="headerlink" title="启动过程分析"></a>启动过程分析</h4><ol>
+<li>预览窗口显示</li>
+<li>闪屏显示</li>
+<li>主页显示</li>
+<li>界面可操作</li>
+</ol>
+<h4 id="启动问题分析"><a href="#启动问题分析" class="headerlink" title="启动问题分析"></a>启动问题分析</h4><ol>
+<li>点击图标很久都不响应</li>
+<li>首页显示太慢</li>
+<li>首页显示后无法操作</li>
+</ol>
+<h3 id="启动优化"><a href="#启动优化" class="headerlink" title="启动优化"></a>启动优化</h3><h4 id="优化工具"><a href="#优化工具" class="headerlink" title="优化工具"></a>优化工具</h4><p>通过如下代码查看手机支持哪些 systrace 类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python systrace.py --list-categories</span><br></pre></td></tr></table></figure>
+<ol>
+<li>通过 systrace+函数插桩来对启动进行分析</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Trace&#123;</span><br><span class="line">    public static void i(String tag)&#123;</span><br><span class="line">        Trace.beginSection(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void o()&#123;</span><br><span class="line">        Trace.endSection();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="优化方式"><a href="#优化方式" class="headerlink" title="优化方式"></a>优化方式</h4><ol>
+<li>闪屏优化 预览闪屏</li>
+<li>业务梳理 懒加载要防止集中化，否则容易出现显示首页后无法操作的情形</li>
+<li>业务优化</li>
+<li><p>线程优化 主要在于减少 CPU 调度带来的波动，让应用的启动时间更加稳定</p>
+<ol>
+<li>线程优化一方面是控制线程数量，线程数量太多会互相竞争 CPU 资源，因此要有统一的线程池，并且根据机器性能来控制数量。</li>
+<li>另一方面是检查线程间的锁，</li>
+</ol>
+</li>
+<li><p>GC 优化</p>
+</li>
+</ol>
+<p>启动过程中，尽量减少 GC 的次数，避免造成主线程长时间的卡顿，可以通过 systrace 单独查看整个启动过程的 GC 时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python systrace.py dalvik -b 90960 -a com.sample.gc</span><br></pre></td></tr></table></figure>
+<p>监控启动过程总 GC 的耗时情况，特别是阻塞式同步 GC 的总次数和耗时</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//GC使用的总耗时，单位是毫秒</span><br><span class="line">Debug.getRuntimeStat(&quot;art.gc.gc-time)</span><br><span class="line">//阻塞式GC的总耗时</span><br><span class="line">Debug.getRuntimeStat(&quot;art.gc.blocking-gc-time&quot;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>启动过程避免进行大量的字符串操作，特别是序列化跟反序列化的过程，一些频繁创建的对象，例如网络库和图片库中的 Byte 数组，Buffer 可以服用，如果一些模块实在需要频繁创建对象，可以考虑移到 Native 实现。</p>
+</blockquote>
+<ol start="6">
+<li>系统调用优化</li>
+</ol>
+<p>在启动过程中，我们尽量不要做系统调用。</p>
+<ol start="7">
+<li>I/O 优化</li>
+</ol>
+<p>启动过程不建议出现网络 I/O</p>
+<ol start="8">
+<li><p>数据重排</p>
+<ol>
+<li>类重排 启动过程类加载顺序可以通过复写 ClassLoader 得到</li>
+<li>资源文件重排</li>
+</ol>
+</li>
+<li><p>类的加载</p>
+<ol>
+<li>将 classVerifyMode 设为 VERIFY_MODE_NONE</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//Dalvik Globals.h</span><br><span class="line">gDvm.classVerifyMode = VERIFY_MODE_NONE;</span><br><span class="line">// Art runtime.cc</span><br><span class="line">verify_=verifier::VerifyMode::kNone</span><br></pre></td></tr></table></figure>
+<p>Atlas 中<a href="https://github.com/alibaba/atlas/blob/master/atlas-core/libs/dalvik_hack-3.0.0.5.jar" target="_blank" rel="noopener">dalvik_hack-3.0.0.5.jar</a>可以通过下面的方法去掉 verify，但是当前没有支持 ART 平台</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AndroidRuntime runtime = AndroidRuntime.getInstance();</span><br><span class="line">runtime.init(context)</span><br><span class="line">runtime.setVerificationEnabled(false)</span><br></pre></td></tr></table></figure>
+<ol start="10">
+<li><p>黑科技</p>
+<ol>
+<li>保活</li>
+<li>插件化和热修复</li>
+</ol>
+</li>
+</ol>
+<h3 id="性能监控"><a href="#性能监控" class="headerlink" title="性能监控"></a>性能监控</h3><h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><ol>
+<li><a href="http://developer.android.com/studio/profile/investigate-ram?hl=zh-cn" target="_blank" rel="noopener">调查 RAM 使用情况</a></li>
+<li><a href="https://github.com/facebook/redex" target="_blank" rel="noopener">ReDex</a></li>
+<li><a href="https://mp.weixin.qq.com/s/79tAFx6zi3JRG-ewoapIVQ" target="_blank" rel="noopener">通过安装包重排布优化 Android 端启动性能</a></li>
+<li><a href="https://mp.weixin.qq.com/s/-NmkSwZu83HAmzKPawdTqQ" target="_blank" rel="noopener">微信 Android 热补丁实践演进之路</a></li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">android glide</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">android 优化</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://zhanfangzxc.github.io/2018/12/24/Android启动优化/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/12/14/java虚拟机指令/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">java虚拟机指令</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -242,9 +424,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

@@ -168,6 +168,230 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Android启动优化" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/24/Android启动优化/">Android启动优化</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/24/Android启动优化/" class="archive-article-date">
+  	<time datetime="2018-12-24T07:35:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="启动分析"><a href="#启动分析" class="headerlink" title="启动分析"></a>启动分析</h3><h4 id="启动过程分析"><a href="#启动过程分析" class="headerlink" title="启动过程分析"></a>启动过程分析</h4><ol>
+<li>预览窗口显示</li>
+<li>闪屏显示</li>
+<li>主页显示</li>
+<li>界面可操作</li>
+</ol>
+<h4 id="启动问题分析"><a href="#启动问题分析" class="headerlink" title="启动问题分析"></a>启动问题分析</h4><ol>
+<li>点击图标很久都不响应</li>
+<li>首页显示太慢</li>
+<li>首页显示后无法操作</li>
+</ol>
+<h3 id="启动优化"><a href="#启动优化" class="headerlink" title="启动优化"></a>启动优化</h3><h4 id="优化工具"><a href="#优化工具" class="headerlink" title="优化工具"></a>优化工具</h4><p>通过如下代码查看手机支持哪些 systrace 类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python systrace.py --list-categories</span><br></pre></td></tr></table></figure>
+<ol>
+<li>通过 systrace+函数插桩来对启动进行分析</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Trace&#123;</span><br><span class="line">    public static void i(String tag)&#123;</span><br><span class="line">        Trace.beginSection(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void o()&#123;</span><br><span class="line">        Trace.endSection();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="优化方式"><a href="#优化方式" class="headerlink" title="优化方式"></a>优化方式</h4><ol>
+<li>闪屏优化 预览闪屏</li>
+<li>业务梳理 懒加载要防止集中化，否则容易出现显示首页后无法操作的情形</li>
+<li>业务优化</li>
+<li><p>线程优化 主要在于减少 CPU 调度带来的波动，让应用的启动时间更加稳定</p>
+<ol>
+<li>线程优化一方面是控制线程数量，线程数量太多会互相竞争 CPU 资源，因此要有统一的线程池，并且根据机器性能来控制数量。</li>
+<li>另一方面是检查线程间的锁，</li>
+</ol>
+</li>
+<li><p>GC 优化</p>
+</li>
+</ol>
+<p>启动过程中，尽量减少 GC 的次数，避免造成主线程长时间的卡顿，可以通过 systrace 单独查看整个启动过程的 GC 时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python systrace.py dalvik -b 90960 -a com.sample.gc</span><br></pre></td></tr></table></figure>
+<p>监控启动过程总 GC 的耗时情况，特别是阻塞式同步 GC 的总次数和耗时</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//GC使用的总耗时，单位是毫秒</span><br><span class="line">Debug.getRuntimeStat(&quot;art.gc.gc-time)</span><br><span class="line">//阻塞式GC的总耗时</span><br><span class="line">Debug.getRuntimeStat(&quot;art.gc.blocking-gc-time&quot;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>启动过程避免进行大量的字符串操作，特别是序列化跟反序列化的过程，一些频繁创建的对象，例如网络库和图片库中的 Byte 数组，Buffer 可以服用，如果一些模块实在需要频繁创建对象，可以考虑移到 Native 实现。</p>
+</blockquote>
+<ol start="6">
+<li>系统调用优化</li>
+</ol>
+<p>在启动过程中，我们尽量不要做系统调用。</p>
+<ol start="7">
+<li>I/O 优化</li>
+</ol>
+<p>启动过程不建议出现网络 I/O</p>
+<ol start="8">
+<li><p>数据重排</p>
+<ol>
+<li>类重排 启动过程类加载顺序可以通过复写 ClassLoader 得到</li>
+<li>资源文件重排</li>
+</ol>
+</li>
+<li><p>类的加载</p>
+<ol>
+<li>将 classVerifyMode 设为 VERIFY_MODE_NONE</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//Dalvik Globals.h</span><br><span class="line">gDvm.classVerifyMode = VERIFY_MODE_NONE;</span><br><span class="line">// Art runtime.cc</span><br><span class="line">verify_=verifier::VerifyMode::kNone</span><br></pre></td></tr></table></figure>
+<p>Atlas 中<a href="https://github.com/alibaba/atlas/blob/master/atlas-core/libs/dalvik_hack-3.0.0.5.jar" target="_blank" rel="noopener">dalvik_hack-3.0.0.5.jar</a>可以通过下面的方法去掉 verify，但是当前没有支持 ART 平台</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AndroidRuntime runtime = AndroidRuntime.getInstance();</span><br><span class="line">runtime.init(context)</span><br><span class="line">runtime.setVerificationEnabled(false)</span><br></pre></td></tr></table></figure>
+<ol start="10">
+<li><p>黑科技</p>
+<ol>
+<li>保活</li>
+<li>插件化和热修复</li>
+</ol>
+</li>
+</ol>
+<h3 id="性能监控"><a href="#性能监控" class="headerlink" title="性能监控"></a>性能监控</h3><h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><ol>
+<li><a href="http://developer.android.com/studio/profile/investigate-ram?hl=zh-cn" target="_blank" rel="noopener">调查 RAM 使用情况</a></li>
+<li><a href="https://github.com/facebook/redex" target="_blank" rel="noopener">ReDex</a></li>
+<li><a href="https://mp.weixin.qq.com/s/79tAFx6zi3JRG-ewoapIVQ" target="_blank" rel="noopener">通过安装包重排布优化 Android 端启动性能</a></li>
+<li><a href="https://mp.weixin.qq.com/s/-NmkSwZu83HAmzKPawdTqQ" target="_blank" rel="noopener">微信 Android 热补丁实践演进之路</a></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">android 优化</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/24/Android启动优化/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-java虚拟机指令" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/14/java虚拟机指令/">java虚拟机指令</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/14/java虚拟机指令/" class="archive-article-date">
+  	<time datetime="2018-12-14T09:54:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="加载和存储指令"><a href="#加载和存储指令" class="headerlink" title="加载和存储指令"></a>加载和存储指令</h3><h3 id="运算指令"><a href="#运算指令" class="headerlink" title="运算指令"></a>运算指令</h3><ol>
+<li>加法指令</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">java 虚拟机</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/14/java虚拟机指令/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-java核心技术之Hashtable-HashMap-TreeMap" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -211,7 +435,7 @@
 <li>基于红黑树实现，提供顺序访问</li>
 <li>顺序是由键的顺序关系决定的，通过Comparator或Comparable来决定</li>
 </ol>
-<p><img src="../images/map.png" alt="map"></p>
+<p><img src="/2018/12/12/java核心技术之Hashtable-HashMap-TreeMap/images/map.png" alt="map"></p>
 <blockquote>
 <p>HashMap的性能表现非常依赖于哈希码的有效性，要掌握hashCode和equals的一些基本约定。</p>
 </blockquote>
@@ -325,7 +549,7 @@
 <li>内部排序：归并排序、交换排序(冒泡，快排)、选择排序、插入排序等。</li>
 <li>外部排序：掌握利用内存和外部存储处理超大数据集</li>
 </ol>
-<p><img src="../images/list.png" alt="list"></p>
+<p><img src="/2018/12/12/java核心技术之Vector-ArrayList-LinkedList对比/images/list.png" alt="list"></p>
 <ol>
 <li>List</li>
 <li>Set: 不允许插入重复元素<ol>
@@ -488,15 +712,15 @@
 </ol>
 <h3 id="展示方式"><a href="#展示方式" class="headerlink" title="展示方式"></a>展示方式</h3><ol>
 <li><p>Call Chart：是 TraceView 和 systrace 默认使用的展示方式，按照应用程序的函数执行顺序来展示，适合用于分析整个流程的调用。</p>
-<p><img src="../images/方法调用.png" alt="方法调用"></p>
+<p><img src="/2018/12/11/Android卡顿优化/images/方法调用.png" alt="方法调用"></p>
 </li>
 <li><p>Flame Chart</p>
-<p><img src="../images/flame_chart.png" alt="flame_chart"></p>
+<p><img src="/2018/12/11/Android卡顿优化/images/flame_chart.png" alt="flame_chart"></p>
 </li>
 </ol>
 <h3 id="卡顿监控"><a href="#卡顿监控" class="headerlink" title="卡顿监控"></a>卡顿监控</h3><p><strong>基于消息队列实现</strong></p>
 <p>假设每隔一秒向消息队列的头部插入一条空消息，假设一秒后这个消息并没有被主线程消费掉，说明阻塞消息运行的时间在 0-1 秒之间。换句话说，如果需要监控 3 秒卡顿，那么在第四次轮询中头部消息依然没有被消费的话，就可以确定主线程出现了一次 3 秒以上的卡顿。</p>
-<p><img src="../images/消息队列.png" alt="消息队列"></p>
+<p><img src="/2018/12/11/Android卡顿优化/images/消息队列.png" alt="消息队列"></p>
 <p><strong>插桩</strong></p>
 <p>使用 Inline Hook 技术，实现类似 Nanoscope 先写内存的方案。</p>
 <ol>
@@ -530,7 +754,48 @@
 <li>监控线程数量，需要监控数量多少，线程创建方式，</li>
 <li>线程时间，监控线程的用户时间 utime，系统时间 stime 和优先级，主要是看哪些线程 utime+stime 时间比较多，占用了过多的 cpu。</li>
 </ol>
-<h3 id="内容扩展"><a href="#内容扩展" class="headerlink" title=" 内容扩展"></a> 内容扩展</h3><ol>
+<h3 id="卡顿现场"><a href="#卡顿现场" class="headerlink" title="卡顿现场"></a>卡顿现场</h3><h4 id="Java-实现"><a href="#Java-实现" class="headerlink" title="Java 实现"></a>Java 实现</h4><ol>
+<li>获取 Java 线程状态:通过 Thread 的 getState 方法可以获取线程状态</li>
+</ol>
+<p>当线程无法获取下面代码中的 object 对象锁的时候，线程就会进入 BLOCKED 状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized (object)&#123;</span><br><span class="line">  dosomething();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>WAITING、TIME_WAITING、BLOCKED 状态都是需要特别注意的状态</strong></p>
+<blockquote>
+<p>BLOCKED 是指线程正在等待获取锁<br>WAITING 是指线程正在等待其他线程的唤醒动作，对应下面的代码：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized (object)&#123;</span><br><span class="line">  object.wait();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当一个线程进入 WAITING 状态时，他不仅会释放 CPU 资源，还会将持有的 object 锁也同时释放。</p>
+<ol start="2">
+<li>获取所有线程堆栈：<strong>Thread.getAllStackTraces()</strong></li>
+</ol>
+<p><strong>Android 7.0 Thread.getAllStackTraces() 是不会返回主线程的堆栈的</strong></p>
+<h4 id="SIGQUIT-信号实现"><a href="#SIGQUIT-信号实现" class="headerlink" title="SIGQUIT 信号实现"></a>SIGQUIT 信号实现</h4><ol>
+<li>Native 线程状态</li>
+</ol>
+<p>本质上 Java 线程的状态其实是 Native 线程的一种映射。<br><img src="/2018/12/11/Android卡顿优化/../images/线程状态.png" alt="线程状态"></p>
+<ol start="2">
+<li>获得 ANR 日志</li>
+</ol>
+<p>如何拿到卡顿时的 ANR 日志？</p>
+<ol>
+<li>第一步，当监控到主线程卡顿时，主动向系统发送 SIGQUIT 信号</li>
+<li>等待/data/anr/traces.txt 文件生成。</li>
+<li>文件生成以后进行上报</li>
+</ol>
+<h4 id="Hook-实现"><a href="#Hook-实现" class="headerlink" title="Hook 实现"></a>Hook 实现</h4><h4 id="现场信息"><a href="#现场信息" class="headerlink" title="现场信息"></a>现场信息</h4><ol>
+<li>CPU 使用率和调度信息</li>
+<li>内存相关信息</li>
+<li>I/O 和网络相关</li>
+</ol>
+<h3 id="卡顿分析"><a href="#卡顿分析" class="headerlink" title="卡顿分析"></a>卡顿分析</h3><h4 id="卡顿率"><a href="#卡顿率" class="headerlink" title="卡顿率"></a>卡顿率</h4><p>卡顿问题的影响面：</p>
+<blockquote>
+<p>UV 卡顿率 = 发生过卡顿 UV / 开启卡顿采集 UV</p>
+</blockquote>
+<p>卡顿的严重程度</p>
+<blockquote>
+<p>PV 卡顿率 = 发生过卡顿 PV / 启动采集 PV</p>
+</blockquote>
+<h4 id="卡顿树"><a href="#卡顿树" class="headerlink" title="卡顿树"></a>卡顿树</h4><h3 id="内容扩展"><a href="#内容扩展" class="headerlink" title=" 内容扩展"></a> 内容扩展</h3><ol>
 <li><a href="http://www.samirchen.com/linux-cpu-performance/" target="_blank" rel="noopener">Linux 环境下进程的 CPU 占用率</a></li>
 <li><a href="http://man7.org/linux/man-pages/man5/proc.5.html" target="_blank" rel="noopener">Linux 文档</a></li>
 <li><a href="http://developer.android.com/studio/profile/generate-trace-logs" target="_blank" rel="noopener">TraceView</a></li>
@@ -544,6 +809,11 @@
 <li><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-ftrace2/index.html" target="_blank" rel="noopener">ftrace 使用下</a></li>
 <li><a href="http://source.android.com/devices/tech/debug/ftrace" target="_blank" rel="noopener">atrace 介绍</a></li>
 <li><a href="http://android.googlesource.com/platform/frameworks/native/+/master/cmds/atrace/atrace.cpp" target="_blank" rel="noopener">atrace 实现</a></li>
+<li><a href="http://developer.android.com/reference/java/lang/Thread.State" target="_blank" rel="noopener">Thread.State</a></li>
+<li><a href="http://juejin.im/post/5b31b510e51d4558a426f7e9" target="_blank" rel="noopener">Java 线程 Dump 分析</a></li>
+<li><a href="https://developer.android.com/topic/performance/vitals/anr" target="_blank" rel="noopener">Anr</a></li>
+<li><a href="http://cloud.tencent.com/developer/article/1064396" target="_blank" rel="noopener">手 Q Android 线程死锁监控与自动化分析实践</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-lo-jpda2/index.html" target="_blank" rel="noopener">JVMTI</a></li>
 </ol>
 
       
@@ -623,7 +893,7 @@
 <li>无符号数 属于基本的数据类型，以 u1，u2，u4，u8 来分别表示 1 个字节，2 个字节，4 个字节和 8 个字节的无符号数，可以用来描述数字，索引引用，数量值或者按照 UTF-8 编码构成的字符串值</li>
 <li>表 由多个无符号数或者其他表作为数据项构成的复合数据类型，所以表都习惯性的以”_info”结尾。用于描述有层次关系的复合结构的数据，整个 class 文件本质上就是一张表。</li>
 </ol>
-<p><img src="../images/classfile.png" alt="类文件结构"></p>
+<p><img src="/2018/12/07/深入理解java虚拟机之六/images/classfile.png" alt="类文件结构"></p>
 <ol>
 <li>magic 魔数 用来确定这个文件是否能被虚拟机所能接收的 class 文件，魔数固定为 0xCAFEBABE，不会改变。</li>
 <li>minor_version(副版本号) major_version(主版本号)</li>
@@ -647,7 +917,7 @@
 <ol start="5">
 <li>access_flags 访问标志 是一种由标志组成的掩码，用于表示某各类或者接口的访问权限以及属性。</li>
 </ol>
-<p><img src="../images/access_flags.png" alt="访问标志"></p>
+<p><img src="/2018/12/07/深入理解java虚拟机之六/images/access_flags.png" alt="访问标志"></p>
 <pre><code>1. 带有ACC_INTERFACE标志的class文件表示是接口而不是类，反之则表示是类而不是接口
 2. 如果一个类被这只了ACC_INTERFACE，那么同时也得设置ACC_ABSTRACT,同时不能再设置ACC_FINAL、ACC_SUPER或ACC_ENUM标志。
 3. 如果没有设置ACC_INTERFACE标志，这个class文件可以具有除ACC_ANNOTATION之外的其他所有标志，ACC_FINAL和ACC_ABSTRACT这类互斥的标志除外
@@ -664,6 +934,46 @@
 <li>methods[] 方法表 只包含当前类或接口中的方法，不包括从父类或父接口继承的方法。</li>
 <li>attributes_count 属性计数器 表示当前 class 文件属性表的成员个数，</li>
 <li>attributes[] 属性表 每个项的值都是 attribute_info 结构。</li>
+</ol>
+<h3 id="属性表集合"><a href="#属性表集合" class="headerlink" title="属性表集合"></a>属性表集合</h3><p><strong>Code属性</strong></p>
+<p>Java程序方法体中的代码经过javac编译器处理后，最终变成了字节码指令存储在Code属性中。</p>
+<p>接口或者抽象类中的方法就不存在该属性。</p>
+<p>slot是虚拟机为局部变量分配内存的最小单位，对于byte，char，short，int，float，boolean和returnAddress不等长度不超过32位的数据类型，每个局部变量占用1个slot。而double和long这种64位的变量占用2个slot。</p>
+<p><strong>Exception属性</strong></p>
+<p>Exceptions属性是列举出方法中可能抛出的受查异常，也就是方法描述时在throws关键字后面列举的异常。</p>
+<p><strong>LineNumberTable属性</strong></p>
+<p>LineNumberTable属性用于描述java源码行号和与字节码行号之间的对应关系。</p>
+<p><strong>LocalVariableTable属性</strong></p>
+<p>LocalVariableTable属性用于描述栈帧中局部变量表中的变量与Java源码中定义的变量之间的关系。</p>
+<p>jdk1.5之后，新增了一个LocalVariableTypeTable属性用来记录泛型信息。</p>
+<p><strong>SourceFile</strong></p>
+<p>用来记录生成这个Class文件的源码文件名称。</p>
+<p><strong>ConstantValue属性</strong></p>
+<p>通知虚拟机自动为静态变量复制，只有被static关键字修饰的变量才能使用这项属性。</p>
+<ol>
+<li><p>对于非static类型的变量的赋值是在实例构造器initf方法中进行的。</p>
+</li>
+<li><p>而对于类变量，则由两种方式可以选择，在类构造器clinit方法中或者使用ConstantValue属性。</p>
+<ol>
+<li>如果同时使用final和static修饰一个变量，并且这个变量的数据类型时基本数据类型或者java.lang.String的话，则生成ConstantValue属性来进行初始化</li>
+<li>如果这个变量没有被final修饰，或者并非基本类型及字符串，则将会选择在clinit方法中进行初始化。</li>
+</ol>
+</li>
+</ol>
+<p><strong>InnerClass</strong>属性</p>
+<p>用于记录内部类与宿主类之间的关联</p>
+<p><strong>Deprecated 及 Synthetic属性</strong></p>
+<p>用于标志类型的布尔属性。</p>
+<p><strong>StackMapTable属性</strong></p>
+<p>是一个复杂的变长属性，位于Code属性的属性表中，这个属性会在虚拟机类加载的字节码验证阶段被新类型检查验证器使用，目的在于代替以前比较消耗性能的基于数据流分析的类型推导验证器。</p>
+<p><strong>Signature属性</strong></p>
+<p>是一个可选的定长属性，可以出现于类、属性表和方法表结构的属性表中。反射之后能够通过这个属性获取泛型类型。</p>
+<p><strong>BootstrapMethods属性</strong></p>
+<p>这个属性用于保存invokedynamic指令引用的引导方法限定符。</p>
+<h3 id="字节码指令集简介"><a href="#字节码指令集简介" class="headerlink" title="字节码指令集简介"></a>字节码指令集简介</h3><p>java虚拟机面向操作数栈而不是寄存器的架构。</p>
+<h3 id="字节码与数据类型"><a href="#字节码与数据类型" class="headerlink" title="字节码与数据类型"></a>字节码与数据类型</h3><ol>
+<li>虚拟机指令中大部分都不支持byte、short、char、以及没有任何指令支持boolean类型。</li>
+<li>编译器会在编译器或运行期将byte和short类型的数据带符号扩展为响应的int类型数据，将boolean和char类型数据零位扩展为响应的int类型数据。</li>
 </ol>
 
       
@@ -1042,280 +1352,6 @@
 
 
   
-    <article id="post-深入理解java虚拟机之三" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/19/深入理解java虚拟机之三/">深入理解java虚拟机之三</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/19/深入理解java虚拟机之三/" class="archive-article-date">
-  	<time datetime="2018-11-19T08:39:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="类文件结构"><a href="#类文件结构" class="headerlink" title="类文件结构"></a>类文件结构</h3>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">虚拟机</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/19/深入理解java虚拟机之三/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-深入理解java虚拟机之二" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/16/深入理解java虚拟机之二/">深入理解java虚拟机之二</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/16/深入理解java虚拟机之二/" class="archive-article-date">
-  	<time datetime="2018-11-16T02:46:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="对象已死吗？"><a href="#对象已死吗？" class="headerlink" title="对象已死吗？"></a>对象已死吗？</h3><h4 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h4><ol>
-<li>给对象中添加一个引用计数器，每当有一个地方引用它时，计数器值加 1，当引用失效时，计数器值就减 1；任何时刻计数器为 0 的对象就是不能再被使用的。</li>
-<li>很难解决对象之间相互循环引用的问题。</li>
-</ol>
-<h4 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h4><ol>
-<li>这个算法的思路就是通过一系列称为“GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链，当一个对象到 GC Roots 没有任何引用链相连时，则证明此对象是不可以用的。</li>
-<li>GC Roots 的对象包括下面几种：<ol>
-<li>虚拟机栈中引用的对象</li>
-<li>方法区中类静态属性引用的对象</li>
-<li>方法区中常量引用的对象</li>
-<li>本地方法栈中 JNI(即一般说的 Native 方法)引用的对象。</li>
-</ol>
-</li>
-</ol>
-<p><strong>Java 引用</strong></p>
-<ol>
-<li>强引用(Strong Reference): 只要强引用还存在，垃圾收集器永远不会回收掉被应用的对象。</li>
-<li>软引用(Soft Reference): 用来描述一些还有用但并非必须的对象。对于软应用关联的对象，在系统将要发生溢出异常之前，将会把这些对象列进回收范围之中进行第二次回收，如果这次回收还没有足够的内存，才会抛出内存溢出异常。</li>
-<li>弱引用(Weak Reference): 也是用来描述非必需对象的，但是他的强度比软引用跟弱一些，被弱引用关联的对象只能生存到下一次垃圾收集发生之前，当垃圾收集器工作时，无论当前内存是否足够，都会回收掉只被弱引用关联的对象。</li>
-<li>虚引用(Phantom Reference): 也被称为幽灵引用或者幻影引用，它是最弱的一种引用关系。</li>
-</ol>
-<h4 id="生存还是死亡"><a href="#生存还是死亡" class="headerlink" title="生存还是死亡"></a>生存还是死亡</h4><p>要真正宣告一个对象死亡，至少要经历两次标记过程：</p>
-<ol>
-<li>如果对象在进行可达性分析后发现没有与 GC Roots 相连接的引用链，那他将会被第一次标记并且进行  一次筛选，筛选的条件时此对象是否有必要执行 finalize()方法，当对象没有覆盖 finalize()方法，或者 finalize()方法已经被虚拟机吊用过，虚拟机将这两种情况都视为“没有必要执行”。</li>
-<li>如果这个对象被判定为有必要执行 finalize()方法，那么这个对象将会防止在一个叫做 F-Queue 的队列之中，并在稍后由一个由虚拟机自动建立的、优先级低的 finalize 线程去执行他。finalize 是对象逃脱死亡的命运的最后一次机会，稍后 GC 将对 F-Queue 中的对象进行第二次小规模标记，如果对象要在 finalize 中成功拯救自己——只要重新与引用链上的任何一个对象建立关联即可。</li>
-</ol>
-<p><strong>一个对象的 finalize()方法最多只会被系统自动调用一次</strong></p>
-<h4 id="回收方法区"><a href="#回收方法区" class="headerlink" title="回收方法区"></a>回收方法区</h4><ol>
-<li>永久代的垃圾收集主要回收两部分内容：废弃常量和无用的类。</li>
-</ol>
-<p>类需要满足下面三个条件才算是“无用的类”:</p>
-<ol>
-<li>该类所有的实例都已经被回收，也就是 java 堆中不存在该类的任何实例。</li>
-<li>加载该类的 ClassLoader 已经被回收</li>
-<li>该类对应的 java.lang.Class 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
-</ol>
-<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h4><ol>
-<li>算法分为标记和清除两个阶段，首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象。</li>
-<li>标记和清除两个过程效率都不高，另一个是空间问题，标记清除之后会产生大量不连续的内存碎片， 空间碎片太多会导致以后在程序运行过程中需要分配较大对象时，无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作。</li>
-</ol>
-<h4 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h4><ol>
-<li>将可用内存按容量划分为大小相等的两块，每次只使用其中的一块，当这一块的内存用完了，就将还存活的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</li>
-<li>实现简单，运行高效，只是这种算法的代价是将内存缩小为原来的一半。</li>
-<li>将内存分为一块较大的 Eden 区和两块较小的 Survivor 空间，每次使用 Eden 和其中一块 Survivor，当回收时，将 Eden 和 Survivor 中还存活着的对象一次性地复制到另外一块 Survivor 空间上，最后清理掉 Eden 和刚才用的 Survivor 空间，HotSpot 虚拟机默认 Eden 和 Survivor 的大小比例是 8:1</li>
-<li>当 Survivor 空间不够用时，需要依赖其他内存(这里指老年代)进行分配担保。</li>
-</ol>
-<h4 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h4><ol>
-<li>标记-整理算法，标记过程仍然与标记-清除算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。</li>
-</ol>
-<h4 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h4><ol>
-<li>在新生代中，每次垃圾收集时都发现有大批对象死去，只有少量存活，那就选用复制算法，只需要付出少量存活对象的复制成本就可以完成手机。</li>
-<li>老年代中因为对象存活率高,没有额外空间对他进行分配担保，就必须采用“标记-清理”或者“标记-整理”算法来进行回收。</li>
-</ol>
-<h3 id="HotSpot-的算法实现"><a href="#HotSpot-的算法实现" class="headerlink" title="HotSpot 的算法实现"></a>HotSpot 的算法实现</h3><h4 id="枚举根节点"><a href="#枚举根节点" class="headerlink" title="枚举根节点"></a>枚举根节点</h4><p>在整个分析期间，整个执行系统看起来就像被冻结在某个时间点上，不可以出现分析过程中对象引用关系还在不断变化的情况，该点不满足话分析结果就无法保证准确性，这点是导致 GC 进行时必须停顿所有 Java 执行线程的其中一个重要原因。</p>
-<p>当执行系统停顿下来之后，并不需要一个不漏的执行上下文和全局的引用位置，虚拟机应当有办法直接得知哪些地方存放着对象引用。在 Hotspot 虚拟机中，是使用一组称为 OopMap 的数据结构来达到这个目的，在类加载完成的时候，Hotspot 就把对象内什么偏移量上是什么类型的数据计算出来，在 JIT 编译过程中，也会在特定的位置记录下栈和寄存器中哪些位置是引用。</p>
-<h4 id="安全点"><a href="#安全点" class="headerlink" title="安全点"></a>安全点</h4><p>HotSpot 虚拟机没有为每条指令都生成 OopMap。只有在特定的位置记录了这些信息，这些位置称为<strong>安全点</strong>,即程序执行时并非在所有地方都能停顿下来开始 GC，只有在到达安全点时才能暂停。</p>
-<p><strong>安全点(SafePoint)</strong></p>
-<ol>
-<li>SafePoint 的选定既不能太少以至于让 GC 等待时间太长，也不能过于频繁以至于过分增大运行时的负荷.</li>
-<li>安全点的选定是以是否具有让程序长时间执行的特征为标准进行选定的。长时间执行的最明显特征就是指令序列复用。</li>
-</ol>
-<p>对于安全点，另一个需要考虑的问题是如何在 GC 发生时让所有线程都跑到最近的安全点上再停顿下来，这里有两种方案:</p>
-<ol>
-<li>抢先式中断：需要线程的执行代码主动去配合，GC 发生时，首先把所有线程全部中断，如果有的线程的中断地方不再安全点上，就恢复线程，让他跑到安全点上，几乎没有虚拟机采用抢先式中断。</li>
-<li>主动式中断：当 GC 需要中断线程的时候，不直接对线程操作，仅仅简单的设置一个标志，各个线程执行时主动去轮询这个标志，发现中断标志位真时就自己中断挂起，轮询标志的地方和安全点是重合的，另外再加上创建对象需要分配内存的地方。</li>
-</ol>
-<h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><h4 id="Serial-收集器"><a href="#Serial-收集器" class="headerlink" title="Serial 收集器"></a>Serial 收集器</h4><p>是一个单线程的收集器，在垃圾收集时必须暂停其他所有的工作线程，直到他收集结束。</p>
-<h4 id="ParNew-收集器"><a href="#ParNew-收集器" class="headerlink" title="ParNew 收集器"></a>ParNew 收集器</h4><ol>
-<li>是 Serial 收集器的多线程版本</li>
-<li>可以使用-XX：ParallelGCThreads 参数来限制垃圾收集的线程数</li>
-</ol>
-<blockquote>
-<p>并行：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。<br>并发：指用户线程与垃圾收集线程同时执行，用户程序在继续运行，而垃圾收集程序运行于另一个 CPU 上。</p>
-</blockquote>
-<h4 id="Parallel-Scavenge-收集器"><a href="#Parallel-Scavenge-收集器" class="headerlink" title="Parallel Scavenge 收集器"></a>Parallel Scavenge 收集器</h4><ol>
-<li>是一个新生代收集器，也是使用复制算法的收集器，是并行的多线程收集器</li>
-<li>吞吐量 = 运行用户代码时间/(运行用户代码时间+垃圾收集时间)</li>
-<li>-XX:MaxGCPauseMillis 控制最大垃圾收集停顿时间</li>
-<li>-XX:GCTimeRatio 设置吞吐量大小 值是一个大于 0 且小于 100 的整数</li>
-<li>-XX:+UseAdaptiveSizePolicy 开关参数，这个参数打开之后，就不需要手工指定新生代的大小</li>
-</ol>
-<h4 id="Serial-Old-收集器"><a href="#Serial-Old-收集器" class="headerlink" title="Serial Old 收集器"></a>Serial Old 收集器</h4><ol>
-<li>是 Serial 收集器的老年代版本，同样是一个单线程收集器，使用标记-整理算法</li>
-<li>给 client 模式下的虚拟机使用</li>
-</ol>
-<h4 id="Parallel-Old-收集器"><a href="#Parallel-Old-收集器" class="headerlink" title="Parallel Old 收集器"></a>Parallel Old 收集器</h4><ol>
-<li>是 Parallel Scavenge 收集器的老年代版本，使用多线程标记-整理算法。</li>
-</ol>
-<h4 id="CMS-收集器"><a href="#CMS-收集器" class="headerlink" title="CMS 收集器"></a>CMS 收集器</h4><ol>
-<li>以获得最短回收停顿时间为目标的收集器</li>
-<li>基于标记-清楚算法实现的。</li>
-</ol>
-<h3 id="G1-收集器"><a href="#G1-收集器" class="headerlink" title="G1 收集器"></a>G1 收集器</h3><ol>
-<li>G1 是面向服务端应用的垃圾收集器。</li>
-<li>并行与并发</li>
-<li>分代手机</li>
-<li>空间整合：是基于标记-整理算法实现的收集器</li>
-<li>可预测的停顿</li>
-</ol>
-<p><strong>G1 收集器的运作分为下面几个步骤</strong></p>
-<ol>
-<li>初始标记</li>
-<li>并发标记</li>
-<li>最终标记</li>
-<li>筛选回收</li>
-</ol>
-<h3 id="内存分配与回收策略"><a href="#内存分配与回收策略" class="headerlink" title="内存分配与回收策略"></a>内存分配与回收策略</h3><ol>
-<li>对象优先在 Eden 分配: 当 Eden 区没有足够空间进行分配时，虚拟机将发起一次 Minor GC。</li>
-<li>大对象直接进入老年代<ol>
-<li>大对象是指需要大量连续内存空间的 Java 对象，最典型的大对象就是那种很长的字符串以及数组。</li>
-</ol>
-</li>
-<li>长期存活的对象将进入老年代<ol>
-<li>虚拟机给每个对象定义了一个对象年龄计数器，如果对象在 Eden 出生并经过第一次 Minor GC 后仍然存活，并且能被 Survivor 容纳的话，将被移动到 Survivor 空间中，并且对象年龄设为 1.</li>
-<li>当它的年龄增加到一定程度，就将会被晋升到老年代中。对象晋升老年代的年龄阈值，可以通过参数-XX:MaxTenuringThreshold 设置。</li>
-</ol>
-</li>
-<li>动态对象年龄判定<ol>
-<li>如果在Survivor空间中相同年龄所有对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代，无须等到MaxTenuringThreshold中要求的年龄。</li>
-</ol>
-</li>
-<li>空间分配担保</li>
-</ol>
-<p><strong>Minor GC 和 Full GC</strong></p>
-<ol>
-<li>Minor GC(新生代 GC): 指发生在新生代的垃圾收集动作，Minor GC 非常频繁，一般回收速度有比较快。</li>
-<li>Full GC(老年代 GC): 指发生在老年代的 GC，经常会伴随至少一次的 Minor GC，速度一般会 Minor GC 慢 10 倍以上。</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">虚拟机</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/16/深入理解java虚拟机之二/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1438,7 +1474,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">android 屏幕适配</a>
+                <a href="javascript:void(0)" class="js-tag color1">android 优化</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1446,7 +1482,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android ConstraintLayout</a>
+                <a href="javascript:void(0)" class="js-tag color3">android 屏幕适配</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1454,11 +1490,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color2">java 集合 map</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android ConstraintLayout</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android ReactNative</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">java 虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">android glide</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1467,14 +1519,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">翻译 android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">android glide</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java 集合 map</a>
               </li>
             
             <div class="clearfix"></div>
