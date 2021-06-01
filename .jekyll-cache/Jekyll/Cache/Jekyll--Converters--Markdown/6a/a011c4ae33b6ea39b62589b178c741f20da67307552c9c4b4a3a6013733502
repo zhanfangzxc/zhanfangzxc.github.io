@@ -1,0 +1,78 @@
+I"<h1 id="断点续传">断点续传</h1>
+
+<p><a href="https://juejin.cn/post/6844903854115389447">Android Okhttp 断点续传面试解析</a></p>
+
+<h2 id="http如何支持断点续传">http如何支持断点续传</h2>
+
+<blockquote>
+  <p>通过头部两个参数：<strong>Range</strong> 和 <strong>Content-Range</strong></p>
+</blockquote>
+
+<h3 id="range">Range</h3>
+
+<p>客户端想要获取文件的部分内容，在请求头Range参数中指定起始字节和终止字节的位置：</p>
+
+<p><strong>Range:(unit=first byte pos)-[last byte pos]</strong></p>
+
+<p><img src="https://malinkang-1253444926.cos.ap-beijing.myqcloud.com/zhaoshanshanACBCC5B8-712D-449C-AB62-1CA61E3DBFE7.png" alt="ACBCC5B8-712D-449C-AB62-1CA61E3DBFE7" /></p>
+
+<h2 id="content-range">Content-Range</h2>
+
+<p>服务端收到客户端Range请求后，在响应头中添加Content-Range参数，返回可接受的文件字节的范围及其文件的总大小。</p>
+
+<p><strong>Content-Range: bytes (unit first byte pos) - [last byte pos]/[entity legth]</strong></p>
+
+<p><img src="https://malinkang-1253444926.cos.ap-beijing.myqcloud.com/zhaoshanshan524AEEC3-F57F-4298-9CDB-84A4055700C1.png" alt="524AEEC3-F57F-4298-9CDB-84A4055700C1" /></p>
+
+<h2 id="请求资源发生改变">请求资源发生改变</h2>
+
+<p><strong>Last-Modified</strong> 和 <strong>Etag</strong> 来判断续传文件资源是否发生改变。</p>
+
+<p><strong>Last-Modified</strong> 和 <strong>If-Modified-Since</strong> 文件最后修改时间</p>
+
+<ol>
+  <li><strong>Last-Modified</strong>：记录文件最后的修改时间，是服务器发送给客户端的。</li>
+  <li><strong>If-Modified-Since</strong>：客户端发送给服务端的</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>1. 客户端缓存从服务器端获取的页面
+2. 客户端访问相同页面时，将服务端返回的Last-Modified作为If-Modified-Since传给服务端
+3. 服务器通过客户端传过来的If-Modified-Since进行判断客户端当前缓存的页面是否是最新的
+	1. 如果不是最新的，就发送最新的页面给客户端
+	2. 如果是最新的，就发送304告诉客户端本地缓存的页面是最新的
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>Etag &amp; if-Range（文件唯一标志）</strong></p>
+
+<ol>
+  <li>Etag：文件的唯一标志，可以是一个hash值或者是一个版本号</li>
+  <li>if-Range：用于判断实体是否改变，如果实体未改变服务器发送客户端丢失的部分，如果实体改变就发送整个实体。</li>
+</ol>
+
+<p><strong>If-Range</strong>可以使用Etag和Last-Modifed返回的值</p>
+
+<p><img src="https://malinkang-1253444926.cos.ap-beijing.myqcloud.com/zhaoshanshan40886848-1388-405C-96CD-197D758B520C.png" alt="40886848-1388-405C-96CD-197D758B520C" /></p>
+
+<p><img src="https://malinkang-1253444926.cos.ap-beijing.myqcloud.com/zhaoshanshan747A0314-CF72-4243-B3A5-2D0696B36F5C.png" alt="747A0314-CF72-4243-B3A5-2D0696B36F5C" /></p>
+
+<h2 id="okhttp-断点下载">OkHttp 断点下载</h2>
+
+<p><strong>断点下载思路</strong></p>
+
+<ol>
+  <li>检查本地是否有下载文件，获取本地下载文件大小，如果不存在，则大小为0</li>
+  <li>获取服务器下载文件总大小，http响应头的Content-Length</li>
+  <li>比对本地文件的大小和要下载的文件的大小</li>
+  <li>发起下载请求，在http请求头中添加Range参数</li>
+</ol>
+
+<p>保存文件时用<strong>RandomAccessFile</strong></p>
+
+<p><img src="https://malinkang-1253444926.cos.ap-beijing.myqcloud.com/zhaoshanshan693EA148-C1FA-4FDA-8FA4-B1867F952CD6.png" alt="693EA148-C1FA-4FDA-8FA4-B1867F952CD6" /></p>
+
+:ET

@@ -1,0 +1,8 @@
+I"�<p><strong>Android 系统中用户空间的第一个进程，进程号是1</strong></p>
+
+<ol>
+  <li>负责创建系统中几个关键进程</li>
+  <li>提供属性服务来管理Android系统中的属性</li>
+</ol>
+
+:ET
